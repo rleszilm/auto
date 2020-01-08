@@ -1,6 +1,8 @@
 -------------------------------------------------------------------------------
 -- Auto
 -------------------------------------------------------------------------------
-include("auto/gearswap_api.lua")
-include("auto/gear_selectors.lua")
 include("auto/commands.lua")
+include("auto/gearswap.lua")
+include("auto/select_gear.lua")
+include("auto/apply_swaps.lua")
+
