@@ -3,69 +3,50 @@ Sets layout
 
 sets.
   |-precast
-  |   |-Item
+  |   |-item
   |   |   |-[Item.Name]
-  |   |-MA
-  |   |   |-[CastingMode]
-  |   |       |-[SpellGroup]
-  |   |       |-[Spell.Type]
-  |   |       |   |-[Spell.Skill]
-  |   |       |       |-[Spell.Name]
-  |   |-JA
+  |   |-ja
   |   |   |-[JA.Name]
-  |   |-RA
-  |   |   |-[RangedMode]
-  |   |       |-[RangedHaste]|
-  |   |-WS
-  |   |   |-[WSMode]
-  |   |   |   |-[WS.Name]
+  |   |-ma
+  |   |   |-spellset()
+  |   |-pet
+  |   |   |-pet_ability_set()
+  |   |-ra
+  |   |   |-rangedset()
+  |   |-ws
+  |   |   |-wsset()
   |-midcast
-  |   |-MA
-  |   |   |-Pet
-  |   |   |   |-[PetName]
-  |   |   |       |-[CastingMode]
-  |   |   |           |-[SpellGroup]
-  |   |   |           |-[Spell.Type]
-  |   |   |               |-[Spell.Skill]
-  |   |   |                   |-[Spell.Name]
-  |   |   |-[CastingMode]
-  |   |       |-[SpellGroup]
-  |   |       |-[Spell.Type]
-  |   |           |-[Spell.Skill]
-  |   |               |-[Spell.Name]
-  |   |-RA
-  |       |-[RangedMode]
-  |           |-[RangedHaste]|
+  |   |-item
+  |   |   |-[Item.Name]
+  |   |-ma
+  |   |   |-spellset()
+  |   |-pet
+  |   |   |-pet_ability_set()
+  |   |-ra
+  |       |-rangedset()
   |-engaged
   |   |-[DefenseMode]
-  |       |-Pet
-  |       |   |-[PetName]
-  |       |       |-[Engaged]
-  |       |       |   |-[CombatForm]
-  |       |       |       |-[CombatSkill]
-  |       |       |           |-[CombatWeapon]
-  |       |       |               |-[TargetAcc]
-  |       |       |                   |-[HybridMode]
-  |       |       |-[Idle]
-  |       |           |-[CombatForm]
-  |       |               |-[CombatSkill]
-  |       |                   |-[CombatWeapon]
-  |       |                       |-[TargetAcc]
-  |       |                           |-[HybridMode]
-  |       |-[CombatForm]
-  |           |-[CombatSkill]
-  |               |-[CombatWeapon]
-  |                   |-[TargetAcc]
-  |                       |-[HybridMode]
+  |       |-pet
+  |       |   |-|pet_status_set()
+  |       |       |-meleeset()
+  |       |-meleeset()
   |-idle
   |   |-[DefenseMode]
-  |       |-Pet
-  |       |   |-[PetName]
-  |       |       |-[Engaged]
-  |       |       |-[Idle]
-  |       |-Weak
-  |       |-Town
-  |       |-Field
+  |       |-[IdleMode]
+  |           |-pet
+  |           |   |-pet_status_set()
+  |           |       |-weak
+  |           |           |-CustomIdleGroups...
+  |           |       |-town
+  |           |           |-CustomIdleGroups...
+  |           |       |-field
+  |           |           |-CustomIdleGroups...
+  |           |-weak
+  |               |-CustomIdleGroups...
+  |           |-town
+  |               |-CustomIdleGroups...
+  |           |-field
+  |               |-CustomIdleGroups...
   |-swaps
       |-Weather
       |   |-[Element]
@@ -83,4 +64,36 @@ sets.
       |-Buff
           |-doom
           |-curse
+
+meleeset()
+  |-[CombatForm]
+      |-[CombatSkill]
+          |-[CombatWeapon]
+              |-[TargetAcc]
+                  |-[MeleeHaste]
+                      |-CusmtomMeleeGroups...
+
+rangedset()
+  |-[TargetRAcc]
+      |-[RangedHaste]
+          |-CustomRangedGroups...
+
+petspellset()
+  |-[PetMode]
+      |-[PetSpellGroup]
+          |-[Spell.Name]
+              |-CustomPetSpellGroups...
+
+spellset()
+  |-[CastingMode]
+      |-[SpellGroup]
+          |-[Spell.Type]
+              |-[Spell.Skill]
+                  |-[Spell.Name]
+                      |-CustomSpellGroups...
+
+wsset()
+  |-[WSMode]
+      |-[WS.Name]
+          |-CustomWSGroups...
 ]]--
