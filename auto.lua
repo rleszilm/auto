@@ -14,36 +14,54 @@ function init()
     -- var for tracking state values
     state = state or {}
 
+    -- config
+    state.config = {}
+    state.config.DebugMode = M{false, "DebugMode"}
+
+    -- defense
     state.DefenseMode         = M{['description'] = 'Defense Mode', 'None', 'Physical', 'Magical', 'Hybrid'}
     state.PhysicalDefenseMode = M{['description'] = 'Physical Defense Mode', 'PDT'}
     state.MagicalDefenseMode  = M{['description'] = 'Magical Defense Mode', 'MDT'}
     state.HybridDefenseMode   = M{['description'] = 'Hybrid Defense Mode', 'Hybrid'}
 
-    state.IdleMode = M{["description"] = "CastingMode", "Normal"}
+    -- idle
+    state.IdleMode         = M{["description"] = "IdleMode", "Normal", "Refresh"}
+    state.CustomIdleGroups = L{}
 
-    state.CombatForm   = M{["description"] = "CombatForm", "Auto", "H2H", "1H", "2H", "DW"}
-    state.CombatSkill  = M{["description"] = "CombatSkill", ["string"]=""}
-    state.CombatWeapon = M{["description"] = "CombatWeapon", ["string"]=""} 
+    -- melee
+    state.CombatForm        = M{["description"] = "CombatForm", "Auto", "H2H", "1H", "2H", "DW"}
+    state.CombatSkill       = M{["description"] = "CombatSkill", ["string"]=""}
+    state.CombatWeapon      = M{["description"] = "CombatWeapon", ["string"]=""} 
+    state.TargetAccuracy    = M{["description"] = "TargetAccuracy", "Normal", ""}
+    state.CustomMeleeGroups = L{}
     
-    state.CastingMode     = M{["description"] = "CastingMode", "Normal", "Resist"}
-    state.PetMode         = M{["description"] = "PetMode", "Normal", "Resist"}
-    state.WeaponSkillMode = M{["description"] = "WeaponSkillMode", "Normal"}
-
-    state.TargetAccuracy       = M{["description"] = "TargetAccuracy", "Normal"}
-    state.TargetRangedAccuracy = M{["description"] = "TargetRangedAccuracy", "Normal"}
-
-    state.CustomIdleGroups   = L{}
+    -- item
     state.CustomItemGroups   = L{}
+
+    -- ja
     state.CustomJAGroups     = L{}
-    state.CustomMAGroups     = L{}
-    state.CustomMeleeGroups  = L{}
-    state.CustomPetGroups    = L{}
-    state.CustomRangedGroups = L{}
-    state.CustomWSGroups     = L{}
 
+    -- ma
+    state.CastingMode    = M{["description"] = "CastingMode", "Normal", "Resist"}
+    state.CustomMAGroups = L{}
 
-    state.OffenseMode  = M{["description"] = "OffenseMode", "None", "1200 Acc", "1250 Acc", "1300+ Acc"}
+    -- ra
+    state.TargetRangedAccuracy = M{["description"] = "TargetRangedAccuracy", "Normal"}
+    state.CustomRangedGroups   = L{}
 
+    -- ws
+    state.WeaponSkillMode = M{["description"] = "WeaponSkillMode", "Normal"}
+    state.CustomWSGroups  = L{}
+
+    -- pet_ability
+    state.PetAbilityMode         = M{["description"] = "PetAbilityMode", "Normal"}
+    state.CustomPetAbilityGroups = L{}
+    -- pet_status
+    state.PetTargetAccuracy       = M{["description"] = "PetTargetAccuracy", "Normal"}
+    state.CustomPetEngagedtGroups = L{}
+    state.PetIdleMode             = M{["description"] = "PetIdleMode", "Normal"}
+    state.CustomPetIdletGroups    = L{}
+    
     state.setPath = L{}
 end
 

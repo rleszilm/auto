@@ -20,7 +20,11 @@ function handle_equip(action, eventArgs, ...)
     equipSet = call_reduce("apply_swaps_", check_handled_cancel, equipSet, eventArgs, unpack(args))
     
     -- equip gear
+    if state.DebugMode then
+        logger.log("equipping", state.setPath)
+    end
     equip(equipSet)
+    state.setPath:clear()
 end
 
 ------------------------------------------------------------
@@ -82,25 +86,67 @@ function auto_get_set_midcast(eventArgs, equipSet, spell)
 end
 
 ----------------------------------------
--- auto_get_by_status
+-- auto_get_set_by_status
 ----------------------------------------
 function auto_get_set_by_status(eventArgs, equipSet)
-    equipSet = step_set({_G[state.DefenseMode.current.."DefenseMode"].current, state.IdleMode.current}, equipSet)
-
     if player.status == "Engaged" then
-        equipSet = get_set_engaged(eventArgs, equipSet)
+        return auto_get_set_melee(eventArgs, equipSet)
     else
-        equipSet = get_set_idle(eventArgs, equipSet)
+        return auto_get_set_idle(eventArgs, equipSet)
     end
-    return equipSet
 end
+
+----------------------------------------
+-- auto_get_set_idle
+----------------------------------------
+function auto_get_set_idle(eventArgs, equipSet)
+    if not sets.idle then
+        return {}
+    end
+
+    state.setPath:append("sets")
+    state.setPath:append("idle")
+end
+
+----------------------------------------
+-- auto_get_set_melee
+----------------------------------------
+function auto_get_set_melee(eventArgs, equipSet)
+    if not sets.engaged then
+        return {}
+    end
+
+    state.setPath:append("sets")
+    state.setPath:append("engaged")
+end
+
+----------------------------------------
+-- auto_get_set_pet_status
+----------------------------------------
+function auto_get_set_pet_status(eventArgs, equipSet)
+   
+end
+
 
 ------------------------------------------------------------
 -- helpers
 ------------------------------------------------------------
+-- get_set_defense
+----------------------------------------
+
+
+
+----------------------------------------
 -- get_set_engaged
 ----------------------------------------
 function get_set_engaged(eventArgs, equipSet)
+    if not sets.engaged then
+        return {}
+    end
+
+    state.setPath:append("sets")
+    state.setPath:append("engaged")
+
     local haste = haste_bucket and haste_bucket(state.HasteNeeded)
     local steps = {}
     equipSet = get_set_pet_status(eventArgs, equipSet)
@@ -114,6 +160,13 @@ end
 -- get_set_idle
 ----------------------------------------
 function get_set_idle(eventArgs, equipSet)
+    if not sets.idle then
+        return {}
+    end
+
+    state.setPath:append("sets")
+    state.setPath:append("idle")
+
     if pet then
         equipSet = get_set_pet_status(eventArgs, equipSet)
     end
@@ -239,4 +292,24 @@ function step_set(steps, evenetArgs, equipSet, mandatory)
         end
     end
     return equipSet
+end
+
+------------------------------------------------------------
+-- display_set_path
+------------------------------------------------------------
+function display_set_path()
+    local setStr
+
+    for _, name in pairs(state.setPath) do
+        if not setStr then
+            setStr = name
+        else
+            if name:contains(' ') or name:contains("'") then
+                setStr = setStr .. '["' .. name .. '"]'
+            else
+                setStr = setStr .. '.' .. name
+            end
+        end
+    end
+    windower.add_to_chat(22, "Equipping sets"..setStr)
 end

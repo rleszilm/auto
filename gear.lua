@@ -4,49 +4,33 @@ Sets layout
 sets.
   |-precast
   |   |-item
-  |   |   |-[Item.Name]
+  |   |   |-item()
   |   |-ja
-  |   |   |-[JA.Name]
+  |   |   |-jobability()
   |   |-ma
-  |   |   |-spellset()
+  |   |   |-magic()
   |   |-pet
-  |   |   |-pet_ability_set()
+  |   |   |-pet_ability()
   |   |-ra
-  |   |   |-rangedset()
+  |   |   |-ranged()
   |   |-ws
-  |   |   |-wsset()
+  |   |   |-weaponskill()
   |-midcast
   |   |-item
-  |   |   |-[Item.Name]
+  |   |   |-item()
   |   |-ma
-  |   |   |-spellset()
+  |   |   |-magic()
   |   |-pet
-  |   |   |-pet_ability_set()
+  |   |   |-pet_ability()
   |   |-ra
-  |       |-rangedset()
+  |       |-ranged()
   |-engaged
-  |   |-[DefenseMode]
-  |       |-pet
-  |       |   |-|pet_status_set()
-  |       |       |-meleeset()
-  |       |-meleeset()
+  |   |-defense()
+  |       |-[pet_status()]
+  |           |-melee()
   |-idle
-  |   |-[DefenseMode]
-  |       |-[IdleMode]
-  |           |-pet
-  |           |   |-pet_status_set()
-  |           |       |-weak
-  |           |           |-CustomIdleGroups...
-  |           |       |-town
-  |           |           |-CustomIdleGroups...
-  |           |       |-field
-  |           |           |-CustomIdleGroups...
-  |           |-weak
-  |               |-CustomIdleGroups...
-  |           |-town
-  |               |-CustomIdleGroups...
-  |           |-field
-  |               |-CustomIdleGroups...
+  |   |-[pet_status()]
+  |       |-idle()
   |-swaps
       |-Weather
       |   |-[Element]
@@ -65,35 +49,64 @@ sets.
           |-doom
           |-curse
 
-meleeset()
+defense()
+  |-[DefenseMode]
+      |-[DefenseModeMode]
+
+idle()
+  |-[IdleMode]
+      |-pet()
+      |   |-weak|town|field
+      |       |-CustomIdleGroups...
+      |-weak|town|field
+          |-CustomIdleGroups...
+
+melee()
   |-[CombatForm]
       |-[CombatSkill]
           |-[CombatWeapon]
-              |-[TargetAcc]
+              |-[TargetAccuracy]
                   |-[MeleeHaste]
                       |-CusmtomMeleeGroups...
 
-rangedset()
-  |-[TargetRAcc]
-      |-[RangedHaste]
-          |-CustomRangedGroups...
+item()
+  |-[Item.Name]
+      |-CustomItemGroups
 
-petspellset()
-  |-[PetMode]
-      |-[PetSpellGroup]
-          |-[Spell.Name]
-              |-CustomPetSpellGroups...
+jobability()
+  |-CustomJAGroups
 
-spellset()
+magic()
   |-[CastingMode]
       |-[SpellGroup]
           |-[Spell.Type]
               |-[Spell.Skill]
                   |-[Spell.Name]
-                      |-CustomSpellGroups...
+                      |-CustomMAGroups
 
-wsset()
+ranged()
+  |-[TargetRangedAccuracy]
+      |-[RangedHaste]
+          |-CustomRangedGroups...
+
+weaponskill()
   |-[WSMode]
       |-[WS.Name]
           |-CustomWSGroups...
+
+pet_ability()
+  |-[Pet.Name]
+      |-[PetAbilityMode]
+          |-[PetSpellGroup]
+              |-[Spell.Name]
+                  |-CustomPetAbilityroups...
+
+pet_status()
+  |-[Pet.Name]
+      |-engaged
+      |   |-[PetTargetAcc]
+      |       |-CustomPetEngagedGroups...
+      |-idle
+          |-[PetIdleMode]
+              |-CustomPetIdleGroups...
 ]]--
