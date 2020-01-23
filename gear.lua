@@ -4,54 +4,70 @@ Sets layout
 sets.
   |-precast
   |   |-item
-  |   |   |-item()
+  |   |   |-[item()]
   |   |-ja
-  |   |   |-jobability()
+  |   |   |-[jobability()]
   |   |-ma
-  |   |   |-magic()
+  |   |   |-[magic()]
   |   |-pet
-  |   |   |-pet_ability()
+  |   |   |-[pet_ability()]
   |   |-ra
-  |   |   |-ranged()
+  |   |   |-[ranged()]
   |   |-ws
-  |   |   |-weaponskill()
+  |   |   |-[weaponskill()]
   |-midcast
   |   |-item
-  |   |   |-item()
+  |   |   |-[item()]
   |   |-ma
-  |   |   |-magic()
+  |   |   |-[magic()]
   |   |-pet
-  |   |   |-pet_ability()
+  |   |   |-[pet_ability()]
   |   |-ra
-  |       |-ranged()
+  |       |-[ranged()]
   |-engaged
-  |   |-defense()
+  |   |-[defense()]
   |       |-[pet_status()]
-  |           |-melee()
+  |           |-[melee()]
   |-idle
-  |   |-[pet_status()]
-  |       |-idle()
-  |-swaps
-      |-Weather
+  |   |-[defense()]
+  |       |-[pet_status()]
+  |           |-[idle()]
+swaps.
+  |-precast|midcast|engaged|idle
+      |-weather
       |   |-[Element]
-      |-Day
+      |-day
       |   |-[Day]
-      |-Time
-      |   |-[Dawn]
-      |   |-[Day]
-      |   |-[Dusk]
-      |   |-[Night]
-      |-Running
-      |-Treasurehunter
-      |-Weapons
-      |   |-[WeaponSetMode]
-      |-Buff
-          |-doom
-          |-curse
+      |-time
+      |   |-dawn|day|dusk|night
+      |-running
+      |-treasurehunter
+      |   |-[TreasureHunterMode]
+      |-buff
+      |   |-CustomBuffGroups...
+      |-CustomSwaps...
+
+weapons.
+  |-melee
+  |   |-[WeaponSetMode]
+  |-ranged
+  |   |-[RangedWeaponSetMode]
+  |-ammo
+  |   |-[AmmoSetMode]
+
 
 defense()
-  |-[DefenseMode]
-      |-[DefenseModeMode]
+    |-defense
+        |-[DefenseMode]
+            |-[DefenseModeMode]
+
+engaged()
+  |-[CombatForm]
+      |-[CombatSkill]
+          |-[CombatWeapon]
+              |-[TargetAccuracy]
+                  |-[MeleeHaste]
+                      |-CusmtomMeleeGroups...
 
 idle()
   |-[IdleMode]
@@ -60,14 +76,6 @@ idle()
       |       |-CustomIdleGroups...
       |-weak|town|field
           |-CustomIdleGroups...
-
-melee()
-  |-[CombatForm]
-      |-[CombatSkill]
-          |-[CombatWeapon]
-              |-[TargetAccuracy]
-                  |-[MeleeHaste]
-                      |-CusmtomMeleeGroups...
 
 item()
   |-[Item.Name]

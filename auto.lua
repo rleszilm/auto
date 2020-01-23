@@ -18,51 +18,61 @@ function init()
     state.config = {}
     state.config.DebugMode = M{false, "DebugMode"}
 
-    -- defense
+    -- set modes
+    ---- defense
     state.DefenseMode         = M{['description'] = 'Defense Mode', 'None', 'Physical', 'Magical', 'Hybrid'}
     state.PhysicalDefenseMode = M{['description'] = 'Physical Defense Mode', 'PDT'}
     state.MagicalDefenseMode  = M{['description'] = 'Magical Defense Mode', 'MDT'}
     state.HybridDefenseMode   = M{['description'] = 'Hybrid Defense Mode', 'Hybrid'}
 
-    -- idle
+    ---- idle
     state.IdleMode         = M{["description"] = "IdleMode", "Normal", "Refresh"}
     state.CustomIdleGroups = L{}
 
-    -- melee
+    ---- engaged
     state.CombatForm        = M{["description"] = "CombatForm", "Auto", "H2H", "1H", "2H", "DW"}
     state.CombatSkill       = M{["description"] = "CombatSkill", ["string"]=""}
     state.CombatWeapon      = M{["description"] = "CombatWeapon", ["string"]=""} 
     state.TargetAccuracy    = M{["description"] = "TargetAccuracy", "Normal", ""}
     state.CustomMeleeGroups = L{}
     
-    -- item
+    ---- item
     state.CustomItemGroups   = L{}
 
-    -- ja
+    ---- ja
     state.CustomJAGroups     = L{}
 
-    -- ma
+    ---- ma
     state.CastingMode    = M{["description"] = "CastingMode", "Normal", "Resist"}
     state.CustomMAGroups = L{}
 
-    -- ra
+    ---- ra
     state.TargetRangedAccuracy = M{["description"] = "TargetRangedAccuracy", "Normal"}
     state.CustomRangedGroups   = L{}
 
-    -- ws
+    ---- ws
     state.WeaponSkillMode = M{["description"] = "WeaponSkillMode", "Normal"}
     state.CustomWSGroups  = L{}
 
-    -- pet_ability
+    ---- pet_ability
     state.PetAbilityMode         = M{["description"] = "PetAbilityMode", "Normal"}
     state.CustomPetAbilityGroups = L{}
-    -- pet_status
+    
+    ---- pet_status
     state.PetTargetAccuracy       = M{["description"] = "PetTargetAccuracy", "Normal"}
     state.CustomPetEngagedtGroups = L{}
     state.PetIdleMode             = M{["description"] = "PetIdleMode", "Normal"}
     state.CustomPetIdletGroups    = L{}
     
+    -- swap modes
+    state.WeaponSetMode       = M{["description"] = "WeaponSetMode", "None"}
+    state.RangedWeaponSetMode = M{["description"] = "RangedWeaponSetMode", "None"}
+    state.AmmoSetMode         = M{["description"] = "AmmoSetMode", "None"}
+    state.TreasureHunterMode  = M{["description"] = "TreasureHunterMode", "None", "1-Hit", "Full"}
+
+    -- Misc
     state.setPath = L{}
+    state.setSwaps = L{}
 end
 
 

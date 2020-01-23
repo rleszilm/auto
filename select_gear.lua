@@ -7,7 +7,9 @@ function handle_equip(action, eventArgs, ...)
     local args = {...}
     local equipSet = {}
 
-    if action ~= "precast" and action ~= "midcast" and action ~= "pet_midcast" then
+    if action == "pet_midcast" then
+        action = "midcast"
+    elseif action ~= "precast" and action ~= "midcast" then
         action = "by_status"
     else
         return
@@ -17,7 +19,7 @@ function handle_equip(action, eventArgs, ...)
     equipSet = call_reduce("get_set_"..action, check_handled_cancel, equipSet, eventArgs, unpack(args))
     
     -- apply swaps
-    equipSet = call_reduce("apply_swaps_", check_handled_cancel, equipSet, eventArgs, unpack(args))
+    equipSet = call_reduce("apply_swaps_"..action, check_handled_cancel, equipSet, eventArgs, unpack(args))
     
     -- equip gear
     if state.DebugMode then
@@ -25,23 +27,25 @@ function handle_equip(action, eventArgs, ...)
     end
     equip(equipSet)
     state.setPath:clear()
+    state.setSwaps:clear()
 end
 
 ------------------------------------------------------------
--- auto_get_set
+-- get_set phases
 ------------------------------------------------------------
 -- auto_get_set_precast
 ----------------------------------------
 function auto_get_set_precast(eventArgs, equipSet, spell, position)
     if not sets.precast then
-        return {}
+        return equipSet
     end
 
     state.setPath:append("sets")
     state.setPath:append("precast")
 
-    local category = spell_category(spell)
+    equipSet = sets.precast
 
+    local category = spell_category(spell)
     if category == "item" then
         equipSet = get_set_item(eventArgs, equipSet, spell)
     elseif category == "ja" then
@@ -64,14 +68,15 @@ end
 ----------------------------------------
 function auto_get_set_midcast(eventArgs, equipSet, spell)
     if not sets.midcast then
-        return {}
+        return equipSet
     end
 
     state.setPath:append("sets")
     state.setPath:append("midcast")
 
-    local category = spell_category(spell)
+    equipSet = sets.midcast
 
+    local category = spell_category(spell)
     if category == "item" then
         equipSet = get_set_item(eventArgs, equipSet, spell)
     elseif category == "ma" then
@@ -90,10 +95,27 @@ end
 ----------------------------------------
 function auto_get_set_by_status(eventArgs, equipSet)
     if player.status == "Engaged" then
-        return auto_get_set_melee(eventArgs, equipSet)
+        return auto_get_set_engaged(eventArgs, equipSet)
     else
         return auto_get_set_idle(eventArgs, equipSet)
     end
+end
+
+----------------------------------------
+-- auto_get_set_engaged
+----------------------------------------
+function auto_get_set_engaged(eventArgs, equipSet)
+    if not sets.engaged then
+        return {}
+    end
+
+    state.setPath:append("sets")
+    state.setPath:append("engaged")
+
+    equipSet = sets.engaged
+
+    local steps = {get_set_defense, get_set_pet_status, get_set_engaged, state.CustomMeleeGroups}
+    return step_set(steps, equipSet)
 end
 
 ----------------------------------------
@@ -101,76 +123,57 @@ end
 ----------------------------------------
 function auto_get_set_idle(eventArgs, equipSet)
     if not sets.idle then
-        return {}
+        return equipSet
     end
 
     state.setPath:append("sets")
     state.setPath:append("idle")
+
+    equipSet = get_set_pet_status(eventArgs, sets.idle)
+
+    local steps = {get_set_defense, get_set_pet_status, state.CustomIdleGroups}
+    return step_set(steps, equipSet)
 end
-
-----------------------------------------
--- auto_get_set_melee
-----------------------------------------
-function auto_get_set_melee(eventArgs, equipSet)
-    if not sets.engaged then
-        return {}
-    end
-
-    state.setPath:append("sets")
-    state.setPath:append("engaged")
-end
-
-----------------------------------------
--- auto_get_set_pet_status
-----------------------------------------
-function auto_get_set_pet_status(eventArgs, equipSet)
-   
-end
-
 
 ------------------------------------------------------------
--- helpers
+-- sets
 ------------------------------------------------------------
 -- get_set_defense
 ----------------------------------------
+function get_defense_set(eventArgs, equipSet, spell)
+    local dm = state.DefenseMode.current
+    if dm == "None" then
+        return equipSet
+    end
 
+    local dmm = state[state.DefenseMode.current.."DefenseMode"].current
+    if dmm == "None" then
+        dmm = nil
+    end
 
+    local steps = {dm, dmm}
+    return step_set(steps, equipSet, spell)
+end
 
 ----------------------------------------
 -- get_set_engaged
 ----------------------------------------
-function get_set_engaged(eventArgs, equipSet)
-    if not sets.engaged then
-        return {}
-    end
-
-    state.setPath:append("sets")
-    state.setPath:append("engaged")
-
-    local haste = haste_bucket and haste_bucket(state.HasteNeeded)
-    local steps = {}
-    equipSet = get_set_pet_status(eventArgs, equipSet)
-    steps[#steps] = {state.CombatForm.current, state.CombatSkill.current, state.CombatWeapon.current, state.TargetAcc.current, haste}
-    steps[#steps] = state.CustomMeleeGroups
-
-    return step_set(steps, equipSet)
+function get_set_engaged(eventArgs, equipSet, spell)
+    local steps = {
+        state.CombatForm.current, 
+        state.CombatSkill.current,
+        state.CombatWeapon.current,
+        state.TargetAcc.current,
+        haste_bucket and haste_bucket(state.HasteNeeded),
+        state.CustomMeleeGroups,
+    }
+    return step_set(steps, equipSet, spell)
 end
 
 ----------------------------------------
 -- get_set_idle
 ----------------------------------------
-function get_set_idle(eventArgs, equipSet)
-    if not sets.idle then
-        return {}
-    end
-
-    state.setPath:append("sets")
-    state.setPath:append("idle")
-
-    if pet then
-        equipSet = get_set_pet_status(eventArgs, equipSet)
-    end
-    
+function get_set_idle(eventArgs, equipSet, spell)
     local steps = {}
     if state.Buffs.weakness then
         steps = {"weak"}
@@ -179,17 +182,16 @@ function get_set_idle(eventArgs, equipSet)
     else
         steps = {"field"}
     end
-    steps[#steps] = state.CustomIdleGroups
-    return step_set(steps, equipSet)
+    steps[#steps+1] = state.CustomIdleGroups
+    return step_set(steps, equipSet, spell)
 end
 
 ----------------------------------------
 -- get_set_item
 ----------------------------------------
 function get_set_item(eventArgs, equipSet, spell)
-    local steps = {spell.en}
-    steps[#steps] = state.CustomItemGroups
-    return step_set(steps, equipSet)
+    local steps = {spell.en, state.CustomItemGroups}
+    return step_set(steps, equipSet, spell)
 end
 
 
@@ -197,45 +199,43 @@ end
 -- get_set_ja
 ----------------------------------------
 function get_set_ja(eventArgs, equipSet, spell)
-    local steps = {spell.en}
-    steps[#steps] = state.CustomJAGroups
-    return step_set(steps, equipSet)
+    local steps = {spell.en, state.CustomJAGroups}
+    return step_set(steps, equipSet, spell)
 end
 
 ----------------------------------------
 -- get_set_ma
 ----------------------------------------
 function get_set_ma(eventArgs, equipSet, spell)
-    local steps = {state.CastingMode.current, get_spell_group(spell), spell.type, spell.skill, spell.en}
-    steps[#steps] = state.CustomMAGroups
-    return step_set(steps, equipSet)
+    local steps = {state.CastingMode.current, get_spell_group(spell), spell.type, spell.skill, spell.en, state.CustomMAGroups}
+    return step_set(steps, equipSet, spell)
 end
 
 ----------------------------------------
 -- get_set_pet_ability
 ----------------------------------------
 function get_set_pet_ability(eventArgs, equipSet, spell)
-    local steps = {state.PetMode.current, pet.name, get_petspell_group(spell), spell.en}
-    steps[#steps] = state.CustomPetAbilityGroups
-    return step_set(steps, equipSet)
+    local steps = {state.PetAbilityMode.current, pet.name, get_petspell_group(spell), spell.en, state.CustomPetAbilityGroups}
+    return step_set(steps, equipSet, spell)
 end
 
 ----------------------------------------
 -- get_set_pet_status
 ----------------------------------------
-function get_set_pet_status(eventArgs, equipSet)
-    local steps = {state.PetMode.current, pet.name, pet.status}
-    steps[#steps] = state.CustomPetGroups
-    return step_set(steps, equipSet)
+function get_set_pet_status(eventArgs, equipSet, spell)
+    local steps = {state.PetStatusMode.current, pet.name, pet.status, state.CustomPetStatusGroups}
+    return step_set(steps, equipSet, spell)
 end
 
 ----------------------------------------
 -- get_set_ra
 ----------------------------------------
 function get_set_ra(eventArgs, equipSet)
-    local haste = snapshot_bucket and snapshot_bucket(state.SnapshotNeeded)
-    local steps = {state.RangedMode.current, haste}
-    steps[#steps] = state.CustomRangedGroups
+    local steps = {
+        state.RangedMode.current,
+        snapshot_bucket and snapshot_bucket(state.SnapshotNeeded),
+        state.CustomRangedGroups,
+    }
     return step_set(steps, equipSet)
 end
 
@@ -243,12 +243,81 @@ end
 -- get_set_ws
 ----------------------------------------
 function get_set_ws(eventArgs, equipSet, spell)
-    local steps = {state.WeaponSkillMode.current, spell.en}
-    steps[#steps] = state.CustomWSGroups
-    return step_set(steps, equipSet)
+    local steps = {state.WeaponSkillMode.current, spell.en, state.CustomWSGroups}
+    return step_set(steps, equipSet, spell)
+end
+
+------------------------------------------------------------
+-- apply_swaps phases
+------------------------------------------------------------
+-- auto_apply_swaps_precast
+----------------------------------------
+function auto_apply_swaps_precast(eventArgs, equipSet, spell, position)
 end
 
 ----------------------------------------
+-- auto_apply_swaps_midcast
+----------------------------------------
+function auto_apply_swaps_midcast(eventArgs, equipSet, spell)
+end
+
+----------------------------------------
+-- auto_apply_swaps_by_status
+----------------------------------------
+function auto_apply_swaps_by_status(eventArgs, equipSet, spell)
+end
+
+----------------------------------------
+-- auto_apply_swaps_engaged
+----------------------------------------
+function auto_apply_swaps_engaged(eventArgs, equipSet)
+end
+
+----------------------------------------
+-- auto_apply_swaps_idle
+----------------------------------------
+function auto_apply_swaps_idle(eventArgs, equipSet)
+end
+
+----------------------------------------
+-- get_swap_weather
+----------------------------------------
+function get_swap_weather(eventArgs, equipSet, spell)
+end
+
+----------------------------------------
+-- get_swap_day
+----------------------------------------
+function get_swap_day(eventArgs, equipSet, spell)
+end
+
+----------------------------------------
+-- get_swap_time
+----------------------------------------
+function get_swap_time(eventArgs, equipSet, spell)
+end
+
+----------------------------------------
+-- get_swap_running
+----------------------------------------
+function get_swap_running(eventArgs, equipSet, spell)
+end
+
+----------------------------------------
+-- get_swap_treasurehunter
+----------------------------------------
+function get_swap_treasurehunter(eventArgs, equipSet, spell)
+end
+
+----------------------------------------
+-- get_swap_buff
+----------------------------------------
+function get_swap_buff(eventArgs, equipSet, spell)
+end
+
+------------------------------------------------------------
+-- helpers
+------------------------------------------------------------
 -- spell_category
 ----------------------------------------
 function spell_category(spell)
@@ -272,26 +341,44 @@ end
 ----------------------------------------
 -- step_set
 ----------------------------------------
-function step_set(steps, evenetArgs, equipSet, mandatory)
-    if type(steps) == "table" then
-        for _, step in pairs(steps) do
-            step_set(step, equipSet, mandatory)
+function step_set(step, action, eventArgs, equipSet, spell)
+    if type(step) == "table" then
+        for _, s in pairs(step) do
+            step_set(s, equipSet, spell)
         end
     elseif type(step) == "function" then
-        equipSet = step(eventArgs, equipSet)
+        equipSet = step(eventArgs, equipSet, spell)
         if eventArgs.selected then
             return equipSet
         end
     else
-        if equipSet[steps] then
-            state.setPath:append(steps)
-            return equipSet[steps]
+        if equipSet[step] then
+            state.setPath:append(step)
+            return equipSet[step]
         end
         if mandatory then
             return nil
         end
     end
     return equipSet
+end
+
+----------------------------------------
+-- swap_set
+----------------------------------------
+function swap_set(swap, action, eventArgs, equipSet, spell)
+    local swappedSet = equipSet
+    if type(swap) == "table" then
+        for _, s in pairs(swap) do
+            swappedSet = swap_set(s, swappedSet, spell)
+        end
+    elseif type(swap) == "function" then
+        local swaps = swap(eventArgs, swappedSet, spell)
+        swappedSet = set_combine(equipSet, swaps)
+        if eventArgs.selected then
+            return swappedSet
+        end
+    return swappedSet
 end
 
 ------------------------------------------------------------
