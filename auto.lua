@@ -1,11 +1,13 @@
 -------------------------------------------------------------------------------
 -- Auto
 -------------------------------------------------------------------------------
-include("auto/core.lua")
-include("auto/commands.lua")
-include("auto/gearswap.lua")
-include("auto/select_gear.lua")
-include("auto/apply_swaps.lua")
+include("auto/action")
+include("auto/core")
+include("auto/commands")
+include("auto/gearswap")
+include("auto/select_gear")
+include("../libs/Modes")
+include("../libs/Mote-Utility")
 
 ------------------------------------------------------------
 -- init
@@ -73,6 +75,10 @@ function init()
     -- Misc
     state.setPath = L{}
     state.setSwaps = L{}
+
+    -- 
+    optional_include({player.name.."/gear.lua"})
+    optional_include({player.name.."/"..player.main_job..".lua"})
 end
 
 

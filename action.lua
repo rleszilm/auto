@@ -13,7 +13,7 @@ function handle_action(action, ...)
     _ = _G["filter_"..action] and _G["filter_"..action](unpack(args))
     
     -- pre-equip logic
-    call_action_all("pre_"..action, checkHandledCancel, eventArgs, unpack(args))
+    call_foreach("pre_"..action, checkHandledCancel, eventArgs, unpack(args))
     if eventArgs.cancel then
         cancel_spell()
     end
@@ -24,7 +24,7 @@ function handle_action(action, ...)
     end
     
     -- post-equip logic
-    call_action_all("post_"..action, checkCancel, eventArgs, unpack(args))
+    call_foreach("post_"..action, checkCancel, eventArgs, unpack(args))
     if eventArgs.cancel then
         cancel_spell()
     end

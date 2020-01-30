@@ -4,7 +4,12 @@
 -- get_sets()
 ------------------------------------------------------------
 function get_sets()
-    windower.add_to_chat(12, "user has not implemented get_sets")
+    init()
+    if init_sets then
+        init_sets()
+    else
+        windower.add_to_chat(12, "user has not implemented get_sets")
+    end
 end
 
 ------------------------------------------------------------
@@ -87,6 +92,7 @@ end
 ------------------------------------------------------------
 function filtered_action(spell)
     handle_action("filtered_action", spell)
+
 end
 
 ------------------------------------------------------------
@@ -133,5 +139,5 @@ end
 -- file_unload
 ------------------------------------------------------------
 function file_unload(file_name)
-    handle_action("file_unload", indi, gain)
+    --TODO: Add logic
 end

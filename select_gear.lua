@@ -378,6 +378,7 @@ function swap_set(swap, action, eventArgs, equipSet, spell)
         if eventArgs.selected then
             return swappedSet
         end
+    end
     return swappedSet
 end
 
