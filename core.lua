@@ -1,7 +1,7 @@
 -------------------------------------------------------------------------------
 -- Core
 -------------------------------------------------------------------------------
-phases = {"auto", "user", "job"}
+phases = {"auto_", "user_", "job_"}
 
 ------------------------------------------------------------
 -- call_foreach
@@ -22,7 +22,8 @@ end
 function call_reduce(fun, continue, acc, eventArgs, ...)
     local mapping = {}
     for _, p in pairs(phases) do
-        if (not continue or continue(eventArgs)) and _G[p..fun] then
+        if (not continue or not continue(eventArgs)) and _G[p..fun] then
+            windower.add_to_chat(22, "Calling - "..p..fun)
             acc = _G[p..fun](eventArgs, acc, unpack({...}))
         end
     end

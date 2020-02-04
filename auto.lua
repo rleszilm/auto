@@ -4,6 +4,7 @@
 include("auto/action")
 include("auto/core")
 include("auto/commands")
+include("auto/gear")
 include("auto/gearswap")
 include("auto/select_gear")
 include("../libs/Modes")
@@ -76,9 +77,38 @@ function init()
     state.setPath = L{}
     state.setSwaps = L{}
 
+    -- sets
+    sets = sets or {}
+    
+    ---- precast
+    sets.precast = {}
+    sets.precast.item = {}
+    sets.precast.ja = {}
+    sets.precast.ma = {}
+    sets.precast.pet = {}
+    sets.precast.ra = {}
+    sets.precast.ws = {}
+    
+    ---- midcast
+    sets.midcast = {}
+    sets.midcast.item = {}
+    sets.midcast.ma = {}
+    sets.midcast.pet = {}
+    sets.midcast.ra = {}
+
+    ---- engaged
+    sets.engaged = {}
+    
+    ---- idle
+    sets.idle = {}
+
     -- 
-    optional_include({player.name.."/gear.lua"})
-    optional_include({player.name.."/"..player.main_job..".lua"})
+    optional_include({"gear/"..player.name.."/gear.lua"})
+    if init_gear then
+        gear = init_gear(gear)
+    end
+
+    optional_include({"gear/"..player.name.."/"..player.main_job..".lua"})
 end
 
 

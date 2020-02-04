@@ -22,9 +22,7 @@ function handle_equip(action, eventArgs, ...)
     equipSet = call_reduce("apply_swaps_"..action, check_handled_cancel, equipSet, eventArgs, unpack(args))
     
     -- equip gear
-    if state.DebugMode then
-        logger.log("equipping", state.setPath)
-    end
+    display_set_path()
     equip(equipSet)
     state.setPath:clear()
     state.setSwaps:clear()
@@ -94,6 +92,7 @@ end
 -- auto_get_set_by_status
 ----------------------------------------
 function auto_get_set_by_status(eventArgs, equipSet)
+    windower.add_to_chat(22, "Player status - "..player.status)
     if player.status == "Engaged" then
         return auto_get_set_engaged(eventArgs, equipSet)
     else
@@ -115,7 +114,7 @@ function auto_get_set_engaged(eventArgs, equipSet)
     equipSet = sets.engaged
 
     local steps = {get_set_defense, get_set_pet_status, get_set_engaged, state.CustomMeleeGroups}
-    return step_set(steps, equipSet)
+    return step_set(eventArgs, steps, equipSet)
 end
 
 ----------------------------------------
@@ -132,7 +131,7 @@ function auto_get_set_idle(eventArgs, equipSet)
     equipSet = get_set_pet_status(eventArgs, sets.idle)
 
     local steps = {get_set_defense, get_set_pet_status, state.CustomIdleGroups}
-    return step_set(steps, equipSet)
+    return step_set(eventArgs, steps, equipSet)
 end
 
 ------------------------------------------------------------
@@ -152,7 +151,7 @@ function get_defense_set(eventArgs, equipSet, spell)
     end
 
     local steps = {dm, dmm}
-    return step_set(steps, equipSet, spell)
+    return step_set(eventArgs, steps, equipSet, spell)
 end
 
 ----------------------------------------
@@ -167,7 +166,7 @@ function get_set_engaged(eventArgs, equipSet, spell)
         haste_bucket and haste_bucket(state.HasteNeeded),
         state.CustomMeleeGroups,
     }
-    return step_set(steps, equipSet, spell)
+    return step_set(eventArgs, steps, equipSet, spell)
 end
 
 ----------------------------------------
@@ -183,7 +182,7 @@ function get_set_idle(eventArgs, equipSet, spell)
         steps = {"field"}
     end
     steps[#steps+1] = state.CustomIdleGroups
-    return step_set(steps, equipSet, spell)
+    return step_set(eventArgs, steps, equipSet, spell)
 end
 
 ----------------------------------------
@@ -191,7 +190,7 @@ end
 ----------------------------------------
 function get_set_item(eventArgs, equipSet, spell)
     local steps = {spell.en, state.CustomItemGroups}
-    return step_set(steps, equipSet, spell)
+    return step_set(eventArgs, steps, equipSet, spell)
 end
 
 
@@ -200,7 +199,7 @@ end
 ----------------------------------------
 function get_set_ja(eventArgs, equipSet, spell)
     local steps = {spell.en, state.CustomJAGroups}
-    return step_set(steps, equipSet, spell)
+    return step_set(eventArgs, steps, equipSet, spell)
 end
 
 ----------------------------------------
@@ -208,7 +207,7 @@ end
 ----------------------------------------
 function get_set_ma(eventArgs, equipSet, spell)
     local steps = {state.CastingMode.current, get_spell_group(spell), spell.type, spell.skill, spell.en, state.CustomMAGroups}
-    return step_set(steps, equipSet, spell)
+    return step_set(eventArgs, steps, equipSet, spell)
 end
 
 ----------------------------------------
@@ -216,15 +215,15 @@ end
 ----------------------------------------
 function get_set_pet_ability(eventArgs, equipSet, spell)
     local steps = {state.PetAbilityMode.current, pet.name, get_petspell_group(spell), spell.en, state.CustomPetAbilityGroups}
-    return step_set(steps, equipSet, spell)
+    return step_set(eventArgs, steps, equipSet, spell)
 end
 
 ----------------------------------------
 -- get_set_pet_status
 ----------------------------------------
 function get_set_pet_status(eventArgs, equipSet, spell)
-    local steps = {state.PetStatusMode.current, pet.name, pet.status, state.CustomPetStatusGroups}
-    return step_set(steps, equipSet, spell)
+    local steps = {pet.name, pet.status, state.CustomPetStatusGroups}
+    return step_set(eventArgs, steps, equipSet, spell)
 end
 
 ----------------------------------------
@@ -236,7 +235,7 @@ function get_set_ra(eventArgs, equipSet)
         snapshot_bucket and snapshot_bucket(state.SnapshotNeeded),
         state.CustomRangedGroups,
     }
-    return step_set(steps, equipSet)
+    return step_set(eventArgs, steps, equipSet)
 end
 
 ----------------------------------------
@@ -244,7 +243,7 @@ end
 ----------------------------------------
 function get_set_ws(eventArgs, equipSet, spell)
     local steps = {state.WeaponSkillMode.current, spell.en, state.CustomWSGroups}
-    return step_set(steps, equipSet, spell)
+    return step_set(eventArgs, steps, equipSet, spell)
 end
 
 ------------------------------------------------------------
@@ -341,10 +340,11 @@ end
 ----------------------------------------
 -- step_set
 ----------------------------------------
-function step_set(step, action, eventArgs, equipSet, spell)
+function step_set(eventArgs, step, equipSet, spell)
+
     if type(step) == "table" then
         for _, s in pairs(step) do
-            step_set(s, equipSet, spell)
+            step_set(eventArgs, s, equipSet, spell)
         end
     elseif type(step) == "function" then
         equipSet = step(eventArgs, equipSet, spell)
@@ -353,11 +353,9 @@ function step_set(step, action, eventArgs, equipSet, spell)
         end
     else
         if equipSet[step] then
+            windower.add_to_chat(22, "Taking step - "..step)
             state.setPath:append(step)
             return equipSet[step]
-        end
-        if mandatory then
-            return nil
         end
     end
     return equipSet
@@ -388,7 +386,8 @@ end
 function display_set_path()
     local setStr
 
-    for _, name in pairs(state.setPath) do
+    for k, name in ipairs(state.setPath) do
+        windower.add_to_chat(22, k..","..name)
         if not setStr then
             setStr = name
         else
@@ -399,5 +398,5 @@ function display_set_path()
             end
         end
     end
-    windower.add_to_chat(22, "Equipping sets"..setStr)
+    windower.add_to_chat(22, "Equipping sets - "..setStr)
 end

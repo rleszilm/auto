@@ -6,9 +6,9 @@
 function get_sets()
     init()
     if init_sets then
-        init_sets()
+        sets = init_sets(sets)
     else
-        windower.add_to_chat(12, "user has not implemented get_sets")
+        windower.add_to_chat(12, "user has not implemented init_sets")
     end
 end
 
@@ -56,7 +56,12 @@ end
 -- status_change
 ------------------------------------------------------------
 function status_change(new, old)
+    windower.add_to_chat(22, "Status change "..old.." -> "..new)
     handle_action("status_change", new, old)
+end
+
+function auto_pre_status_change(eventArgs, new, old)
+    eventArgs.equip = true
 end
 
 ------------------------------------------------------------

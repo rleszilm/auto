@@ -1,7 +1,9 @@
 -------------------------------------------------------------------------------
--- Core
+-- Action
 -------------------------------------------------------------------------------
 function handle_action(action, ...)
+    windower.add_to_chat(22, "Handling "..action)
+
     local args = {...}
     local eventArgs = {
         equip = false,   -- whether gear should be equipped during the default phase
