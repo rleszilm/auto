@@ -98,7 +98,7 @@ function combatform:equip_ammo(p)
         self:set("RangedAmmo", item.en)
     else
         -- if no skill the item is gil
-        if state.combatform.ranged then
+        if state.modules.combatform.ranged then
             self:set("RangedAmmo", "None")
         else
             self:set("RangedSkill", res.skills[0].en)

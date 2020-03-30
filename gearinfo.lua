@@ -23,17 +23,17 @@ function gearinfo:init()
 end
 
 function gearinfo:self_command(eventArgs, command)
-    if self:set('dw_needed', command[2]) then
+    if self:set('dw_needed', command[1]) then
         eventArgs.handled = true
         eventArgs.equip = true
     end
 
-    if self:set('total_haste', command[3]) then
+    if self:set('total_haste', command[2]) then
         eventArgs.handled = true
         eventArgs.equip = true
     end
 
-    if self:set('running', command[4] == 'true') then
+    if self:set('running', command[3] == 'true') then
         eventArgs.handled = true
         eventArgs.equip = true
     end
@@ -51,21 +51,21 @@ end
 ------------------------------------------------------------
 -- Auto hooks
 ------------------------------------------------------------
-function haste_bucket()
-    if job_haste_bucket then
-        return "DW-"..job_haste_bucket(state.modules.gearinfo.dw_needed)
+function dual_wield_bucket()
+    if job_dual_wield_bucket then
+        return "DW-"..job_dual_wield_bucket(state.modules.gearinfo.dw_needed)
     end
 
-    if user_haste_bucket then
-        return "DW-"..user_haste_bucket(state.modules.gearinfo.dw_needed)
+    if user_dual_wield_bucket then
+        return "DW-"..user_dual_wield_bucket(state.modules.gearinfo.dw_needed)
     end
 
-    if auto_haste_bucket then
-        return "DW-"..auto_haste_bucket(state.modules.gearinfo.dw_needed)
+    if auto_dual_wield_bucket then
+        return "DW-"..auto_dual_wield_bucket(state.modules.gearinfo.dw_needed)
     end
 end
 
-function auto_haste_bucket(dw_needed)
+function auto_dual_wield_bucket(dw_needed)
     if dw_needed == "false" then
         return "0"
     end

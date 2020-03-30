@@ -1,13 +1,16 @@
 -------------------------------------------------------------------------------
 -- Auto
 -------------------------------------------------------------------------------
+include("auto/binds")
 include("auto/commands")
 include("auto/gear")
 include("auto/gearswap")
 include("auto/select_gear")
 include("auto/combat_form")
 include("auto/gearinfo")
+include("auto/ranged_attack")
 include("auto/snapshot_bucket")
+include("auto/skill_chains")
 include("../libs/Modes")
 include("../libs/Mote-Utility")
 
@@ -40,7 +43,7 @@ function init()
     -- engaged
     ----------------------------------------
     state.MeleeForm         = M{["description"] = "MeleeForm", "H2H", "1H", "2H", "DW"}
-    state.MeleeFormOverride = M{["description"] = "MeleeFormOverride", "Auto", "H2H", "1H", "2H", "DW"}
+    state.MeleeFormOverride = M{["description"] = "MeleeFormOverride", "None", "H2H", "1H", "2H", "DW"}
     state.MeleeSkill        = M{["description"] = "MeleeSkill", ["string"]=""}
     state.MeleeWeapon       = M{["description"] = "MeleeWeapon", ["string"]=""} 
     state.TargetAccuracy    = M{["description"] = "TargetAccuracy", "Default"}
@@ -76,10 +79,10 @@ function init()
     state.CustomPetAbilityGroups = L{}
     
     -- status
-    state.PetTargetAccuracy       = M{["description"] = "PetTargetAccuracy", "Normal"}
-    state.CustomPetEngagedtGroups = L{}
-    state.PetIdleMode             = M{["description"] = "PetIdleMode", "Normal"}
-    state.CustomPetIdletGroups    = L{}
+    state.PetTargetAccuracy      = M{["description"] = "PetTargetAccuracy", "Normal"}
+    state.CustomPetEngagedGroups = L{}
+    state.PetIdleMode            = M{["description"] = "PetIdleMode", "Normal"}
+    state.CustomPetIdleGroups    = L{}
 
     ----------------------------------------
     -- ra
@@ -97,10 +100,13 @@ function init()
     state.CustomWSGroups  = L{}
     
     -- swap modes
-    state.WeaponSetMode       = M{["description"] = "WeaponSetMode", "None"}
-    state.RangedWeaponSetMode = M{["description"] = "RangedWeaponSetMode", "None"}
-    state.AmmoSetMode         = M{["description"] = "AmmoSetMode", "None"}
+    state.WeaponSetMode       = M{["description"] = "WeaponSetMode", "Manual"}
+    state.RangedWeaponSetMode = M{["description"] = "RangedWeaponSetMode", "Manual"}
+    state.AmmoSetMode         = M{["description"] = "AmmoSetMode", "Manual"}
     state.TreasureHunterMode  = M{["description"] = "TreasureHunterMode", "None", "1-Hit", "Full"}
+
+    -- swap functions
+    state.swaps = {}
 
     -- Misc
     state.setPath = L{}
@@ -143,6 +149,9 @@ function init()
     ---- swaps
     sets.swaps = {}
 
+    ----------------------------------------
+    -- load player files
+    ----------------------------------------
     -- load optional logic files
     optional_include({"gear/"..player.name.."/logic.lua"})
     optional_include({"gear/"..player.name.."/"..player.main_job.."_logic.lua"})
@@ -161,10 +170,119 @@ function init()
         windower.add_to_chat(12, "init_gear_sets has not been defined")
     end
 
-    -- init extras
+    ----------------------------------------
+    -- init modules
+    ----------------------------------------
     for _, m in pairs(state.modules) do
         if m.init then
             m:init()
         end
+    end
+
+    ----------------------------------------
+    -- setup
+    ----------------------------------------
+    -- auto setup
+    if auto_setup then
+        state = auto_setup(state)
+    end
+
+    -- user setup
+    if user_setup then
+        state = user_setup(state)
+    end
+
+    -- job setup
+    if job_setup then
+        state = job_setup(state)
+    end
+
+    ----------------------------------------
+    -- binds
+    ----------------------------------------
+    if auto_binds then
+        auto_binds(state)
+    end
+
+    if user_binds then
+        user_binds(state)
+    end
+
+    if job_binds then
+        job_binds(state)
+    end
+end
+
+function auto_binds(state)
+    -- set binds
+    -- ^ - Ctrl
+    -- ! - Alt
+    -- @ - Win
+    -- # - Apps
+    -- ~ - Shift
+
+    -- weapon toggles
+    state.binds:bind("f9", "gs c cycle WeaponSetMode")
+    state.binds:bind("~f9", "gs c cycleback WeaponSetMode")
+    state.binds:bind("^f9", "gs c cycle RangedWeaponSetMode")
+    state.binds:bind("~^f9", "gs c cycleback RangedWeaponSetMode")
+    state.binds:bind("!f9", "gs c cycle AmmoSetMode")
+    state.binds:bind("~!f9", "gs c cycleback AmmoSetMode")
+    
+    -- armor toggles
+    state.binds:bind("f10", "gs c cycle DefenseMode")
+    state.binds:bind("~f10", "gs c cycleback DefenseMode")
+    state.binds:bind("^f10", "gs c cycle PhysicalDefenseMode")
+    state.binds:bind("~^f10", "gs c cycleback PhysicalDefenseMode")
+    state.binds:bind("!f10", "gs c cycle MagicalDefenseMode")
+    state.binds:bind("~!f10", "gs c cycleback MagicalDefenseMode")
+    state.binds:bind("@f10", "gs c cycle HybridDefenseMode")
+    state.binds:bind("~@f10", "gs c cycleback HybridDefenseMode")
+
+    -- engaged forms
+    state.binds:bind("f11", "gs c cycle MeleeFormOverride")
+    state.binds:bind("~f11", "gs c cycleback MeleeFormOverride")
+    state.binds:bind("^f11", "gs c cycle TargetAccuracy")
+    state.binds:bind("~^f11", "gs c cycleback TargetAccuracy")
+    state.binds:bind("!f11", "gs c cycle TargetRangedAccuracy")
+    state.binds:bind("~!f11", "gs c cycleback TargetRangedAccuracy")
+end
+
+function update_mode(...)
+    local args = {...}
+
+    local label
+    local mode
+    local method
+
+    if #args == 2 then
+        label = args[1]
+        method = args[2]
+
+        local tokens = args[1]:split(".")
+
+        mode = state
+        for _, k in pairs(tokens) do
+            mode = mode[k]
+            if mode == nil then
+                return
+            end
+        end
+    elseif #args == 3 then
+        label = args[1]
+        mode = args[2]
+        method = args[3]
+    end
+
+    if mode and mode[method] then
+        local old = mode.current
+        mode[method](mode)
+        if old ~= mode.current then
+            windower.add_to_chat(14, label..": "..old.." -> "..mode.current)
+        end
+    else
+        windower.add_to_chat(11, "Bad call to update_mode")
+        table.print(args)
+        return
     end
 end

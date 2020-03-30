@@ -28,6 +28,15 @@ function auto_pre_precast(eventArgs, spell, position)
     eventArgs.equip = true
 end
 
+function auto_post_precast(eventArgs, spell, position)
+    if eventArgs.cancel then
+        return
+    end
+    
+    windower.add_to_chat(32, "Busy until midcast")
+    state.busyUntil = "midcast"
+end
+
 ------------------------------------------------------------
 -- midcast
 ------------------------------------------------------------
@@ -35,8 +44,18 @@ function midcast(spell)
     handle_action("midcast", spell)
 end
 
-function auto_pre_midcast(eventArgs, spell)
+function auto_post_midcast(eventArgs, spell)
     eventArgs.equip = true
+
+    windower.add_to_chat(32, "pre-midcast")
+    if spell.prefix == "/pet" and spell.type ~= "PetCommand" then
+        table.print(spell)
+        windower.add_to_chat(32, "Busy until pet_midcast")
+        state.busyUntil = "pet_aftercast"
+    else
+        windower.add_to_chat(32, "Busy until aftercast")
+        state.busyUntil = "aftercast"
+    end
 end
 
 ------------------------------------------------------------
@@ -46,8 +65,13 @@ function aftercast(spell)
     handle_action("aftercast", spell)
 end
 
-function auto_pre_aftercast(eventArgs, spell)
+function auto_post_aftercast(eventArgs, spell)
     eventArgs.equip = true
+
+    if state.busyUntil then
+        windower.add_to_chat(32, "No longer Busy")
+        state.busyUntil = nil
+    end
 end
 
 ------------------------------------------------------------
@@ -80,6 +104,15 @@ end
 ------------------------------------------------------------
 function pet_aftercast(spell)
     handle_action("pet_aftercast", spell)
+end
+
+function auto_post_pet_aftercast(eventArgs, spell)
+    eventArgs.equip = true
+
+    if state.busyUntil == "pet_aftercast" then
+        windower.add_to_chat(32, "No longer busy")
+        state.busyUntil = nil
+    end
 end
 
 ------------------------------------------------------------
@@ -148,18 +181,32 @@ end
 ------------------------------------------------------------
 function file_unload(file_name)
     --TODO: Add logic
+    state.binds:release()
 end
 
 -------------------------------------------------------------------------------
 -- Action Handler
 -------------------------------------------------------------------------------
 function handle_action(action, ...)
+    if state.busyUntil and state.busyUntil ~= action then
+        windower.add_to_chat(32, "Expecting phase - "..(state.busyUntil or "nil").."; got - "..action)
+        return
+    end
+
+    windower.add_to_chat(32, "Handling - "..action)
     local args = {...}
     local eventArgs = {
+        action = action,
         equip = false,   -- whether gear should be equipped during the default phase
         handled = false, -- whether the action has been handled
         cancel = false   -- whether the spell should be cancelled
     }
+
+    for _, module in pairs(state.modules) do
+        if module[action] then
+            module[action](eventArgs, unpack(args))            
+        end
+    end
 
     -- filter
     _ = _G["filter_"..action] and _G["filter_"..action](unpack(args))
