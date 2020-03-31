@@ -6,11 +6,17 @@ include("auto/commands")
 include("auto/gear")
 include("auto/gearswap")
 include("auto/select_gear")
+include("auto/spell_groups")
+
+-- modules
 include("auto/combat_form")
 include("auto/gearinfo")
+include("auto/macros")
 include("auto/ranged_attack")
 include("auto/snapshot_bucket")
 include("auto/skill_chains")
+
+-- mote code
 include("../libs/Modes")
 include("../libs/Mote-Utility")
 
@@ -22,6 +28,8 @@ function init()
     -- state
     ------------------------------------------------------------
     state = state or {}
+
+    state.buffs = {}
 
     ------------------------------------------------------------
     -- config
@@ -171,15 +179,6 @@ function init()
     end
 
     ----------------------------------------
-    -- init modules
-    ----------------------------------------
-    for _, m in pairs(state.modules) do
-        if m.init then
-            m:init()
-        end
-    end
-
-    ----------------------------------------
     -- setup
     ----------------------------------------
     -- auto setup
@@ -210,6 +209,15 @@ function init()
 
     if job_binds then
         job_binds(state)
+    end
+
+    ----------------------------------------
+    -- init modules
+    ----------------------------------------
+    for _, m in pairs(state.modules) do
+        if m.init then
+            m:init()
+        end
     end
 end
 

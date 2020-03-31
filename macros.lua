@@ -21,18 +21,19 @@ function macros:new(o)
 end
 
 function macros:init()
+    self:update()
 end
 
 function macros:set_macros(macros)
     self.macros = macros
 end
 
-function macros:refresh()
+function macros:unlock()
     self.locked = false
-    self:equip()
+    self:update()
 end
 
-function macros:equip()
+function macros:update()
     local steps = {
         player.main_job,
         player.sub_job,
@@ -79,20 +80,22 @@ function macros:equip()
         self.locked = true
         self._style = style
         if command then
-            command = command..';wait.1;input /lockstyle '..style
+            command = command..';wait.1;input /lockstyleset '..style
         else
-            command = '@input /lockstyle '..style
+            command = '@input /lockstyleset '..style
         end
     end
 
-    send_command(command)
+    if command then
+        send_command(command)
+    end
 end
 
 ------------------------------------------------------------
 -- Gearswap hooks
 ------------------------------------------------------------
 function macros:pet_change(pet, gain)
-    self:equip()
+    self:update()
 end
 
 ------------------------------------------------------------
@@ -109,9 +112,9 @@ function on_chunk(id, data, modified, injected, blocked)
     if injected then
         return
     elseif id == 0x50 then -- equip gear
-        state.modules.macros:equip()
+        state.modules.macros:update()
     elseif id == 0x67 then -- character sync
-        state.modules.macros:refresh()
+        state.modules.macros:unlock()
     end
 end
 

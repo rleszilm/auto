@@ -1,5 +1,4 @@
 require("logger")
-include("../libs/Mote-Mappings")
 
 -------------------------------------------------------------------------------
 -- GearSwap API
@@ -33,7 +32,6 @@ function auto_post_precast(eventArgs, spell, position)
         return
     end
     
-    windower.add_to_chat(32, "Busy until midcast")
     state.busyUntil = "midcast"
 end
 
@@ -44,16 +42,14 @@ function midcast(spell)
     handle_action("midcast", spell)
 end
 
-function auto_post_midcast(eventArgs, spell)
+function auto_pre_midcast(eventArgs, spell)
     eventArgs.equip = true
+end
 
-    windower.add_to_chat(32, "pre-midcast")
+function auto_post_midcast(eventArgs, spell)
     if spell.prefix == "/pet" and spell.type ~= "PetCommand" then
-        table.print(spell)
-        windower.add_to_chat(32, "Busy until pet_midcast")
         state.busyUntil = "pet_aftercast"
     else
-        windower.add_to_chat(32, "Busy until aftercast")
         state.busyUntil = "aftercast"
     end
 end
@@ -67,9 +63,10 @@ end
 
 function auto_post_aftercast(eventArgs, spell)
     eventArgs.equip = true
+end
 
+function auto_post_aftercast(eventArgs, spell)
     if state.busyUntil then
-        windower.add_to_chat(32, "No longer Busy")
         state.busyUntil = nil
     end
 end
@@ -106,11 +103,12 @@ function pet_aftercast(spell)
     handle_action("pet_aftercast", spell)
 end
 
-function auto_post_pet_aftercast(eventArgs, spell)
+function auto_pre_pet_aftercast(eventArgs, spell)
     eventArgs.equip = true
+end
 
+function auto_post_pet_aftercast(eventArgs, spell)
     if state.busyUntil == "pet_aftercast" then
-        windower.add_to_chat(32, "No longer busy")
         state.busyUntil = nil
     end
 end
@@ -141,6 +139,11 @@ end
 ------------------------------------------------------------
 function buff_change(name, gain, buff_details)
     handle_action("buff_change", name, gain, buff_details)
+end
+
+function auto_buff_change(eventArgs, name, gain, buff_details)
+    state.buff[name] = gain
+    state.buff[name:lower()] = gain
 end
 
 ------------------------------------------------------------
@@ -189,11 +192,12 @@ end
 -------------------------------------------------------------------------------
 function handle_action(action, ...)
     if state.busyUntil and state.busyUntil ~= action then
-        windower.add_to_chat(32, "Expecting phase - "..(state.busyUntil or "nil").."; got - "..action)
+        --windower.add_to_chat(32, "Busy in ("..action..") waiting for - "..state.busyUntil)
         return
     end
 
-    windower.add_to_chat(32, "Handling - "..action)
+    --windower.add_to_chat(32, "Handling "..action)
+
     local args = {...}
     local eventArgs = {
         action = action,
@@ -202,9 +206,10 @@ function handle_action(action, ...)
         cancel = false   -- whether the spell should be cancelled
     }
 
+    -- pass action to modules
     for _, module in pairs(state.modules) do
         if module[action] then
-            module[action](eventArgs, unpack(args))            
+            module[action](module, eventArgs, unpack(args))            
         end
     end
 
@@ -240,7 +245,8 @@ function handle_equip(action, eventArgs, ...)
     local equipSet = {}
 
     if action == "pet_midcast" then
-        action = "midcast"
+        -- pet_midcast is set during midcast
+        return
     elseif action ~= "precast" and action ~= "midcast" then
         action = "by_status"
     end

@@ -286,29 +286,29 @@ gear["Amalric"].Feet.D = {name="Amalric Nails", augments={'Mag. Acc.+15', '"Mag.
 ------ Apogee Attire Set
 gear["Apogee"] = {}
 gear["Apogee"].Head = {name="Apogee Crown"}
-gear["Apogee"].Head.A = {name="Apogee Crown", augments={'MP+60', 'Pet: "Mag.Atk.Bns."+30', 'Blood Pact Damage+7'}}
-gear["Apogee"].Head.B = {name="Apogee Crown", augments={'MP+60', 'Pet: Attack+30', 'Blood Pact Damage+7'}}
-gear["Apogee"].Head.C = {name="Apogee Crown", augments={'Pet: Attack+20', 'Pet: "Mag.Atk.Bns."+20', 'Blood Pact Damage+7'}}
+gear["Apogee"].Head.A = {name="Apogee Crown", augments={'MP+60', 'Pet: "Mag.Atk.Bns."+30', 'Blood Pact Dmg.+7'}}
+gear["Apogee"].Head.B = {name="Apogee Crown", augments={'MP+60', 'Pet: Attack+30', 'Blood Pact Dmg.+7'}}
+gear["Apogee"].Head.C = {name="Apogee Crown", augments={'Pet: Attack+20', 'Pet: "Mag.Atk.Bns."+20', 'Blood Pact Dmg.+7'}}
 gear["Apogee"].Head.D = {name="Apogee Crown", augments={'Pet: Accuracy+20', 'Avatar Perpetuation Cost-5', 'Pet: Damage Taken-3%'}}
 gear["Apogee"].Body = {name="Apogee Dalmatica"}
-gear["Apogee"].Body.A = {name="Apogee Dalmatica", augments={'MP+60', 'Pet: "Mag.Atk.Bns."+30', 'Blood Pact Damage+7'}}
-gear["Apogee"].Body.B = {name="Apogee Dalmatica", augments={'MP+60', 'Pet: Attack+30', 'Blood Pact Damage+7'}}
-gear["Apogee"].Body.C = {name="Apogee Dalmatica", augments={'Pet: Attack+20', 'Pet: "Mag.Atk.Bns."+20', 'Blood Pact Damage+7'}}
+gear["Apogee"].Body.A = {name="Apogee Dalmatica", augments={'MP+60', 'Pet: "Mag.Atk.Bns."+30', 'Blood Pact Dmg.+7'}}
+gear["Apogee"].Body.B = {name="Apogee Dalmatica", augments={'MP+60', 'Pet: Attack+30', 'Blood Pact Dmg.+7'}}
+gear["Apogee"].Body.C = {name="Apogee Dalmatica", augments={'Pet: Attack+20', 'Pet: "Mag.Atk.Bns."+20', 'Blood Pact Dmg.+7'}}
 gear["Apogee"].Body.D = {name="Apogee Dalmatica", augments={'"Summoning Magic Skill"+15', 'Enmity-5', 'Pet: Damage Taken-3%'}}
 gear["Apogee"].Hands = {name="Apogee Mitts"}
-gear["Apogee"].Hands.A = {name="Apogee Mitts", augments={'MP+60', 'Pet: "Mag.Atk.Bns."+30', 'Blood Pact Damage+7'}}
-gear["Apogee"].Hands.B = {name="Apogee Mitts", augments={'MP+60', 'Pet: Attack+30', 'Blood Pact Damage+7'}}
-gear["Apogee"].Hands.C = {name="Apogee Mitts", augments={'Pet: Attack+20', 'Pet: "Mag.Atk.Bns."+20', 'Blood Pact Damage+7'}}
+gear["Apogee"].Hands.A = {name="Apogee Mitts", augments={'MP+60', 'Pet: "Mag.Atk.Bns."+30', 'Blood Pact Dmg.+7'}}
+gear["Apogee"].Hands.B = {name="Apogee Mitts", augments={'MP+60', 'Pet: Attack+30', 'Blood Pact Dmg.+7'}}
+gear["Apogee"].Hands.C = {name="Apogee Mitts", augments={'Pet: Attack+20', 'Pet: "Mag.Atk.Bns."+20', 'Blood Pact Dmg.+7'}}
 gear["Apogee"].Hands.D = {name="Apogee Mitts", augments={'Pet: Mag. Acc.+20', '"Blood Pact" ability delay-5', '"Blood Pact" Damage+7'}}
 gear["Apogee"].Legs = {name="Apogee Slacks"}
-gear["Apogee"].Legs.A = {name="Apogee Slacks", augments={'MP+60', 'Pet: "Mag.Atk.Bns."+30', 'Blood Pact Damage+7'}}
-gear["Apogee"].Legs.B = {name="Apogee Slacks", augments={'MP+60', 'Pet: Attack+30', 'Blood Pact Damage+7'}}
-gear["Apogee"].Legs.C = {name="Apogee Slacks", augments={'Pet: Attack+20', 'Pet: "Mag.Atk.Bns."+20', 'Blood Pact Damage+7'}}
-gear["Apogee"].Legs.D = {name="Apogee Slacks", augments={'Pet: STR+15', 'Blood Pact Damage+13', 'Pet: "Dbl.Atk."+3'}}
+gear["Apogee"].Legs.A = {name="Apogee Slacks", augments={'MP+60', 'Pet: "Mag.Atk.Bns."+30', 'Blood Pact Dmg.+7'}}
+gear["Apogee"].Legs.B = {name="Apogee Slacks", augments={'MP+60', 'Pet: Attack+30', 'Blood Pact Dmg.+7'}}
+gear["Apogee"].Legs.C = {name="Apogee Slacks", augments={'Pet: Attack+20', 'Pet: "Mag.Atk.Bns."+20', 'Blood Pact Dmg.+7'}}
+gear["Apogee"].Legs.D = {name="Apogee Slacks", augments={'Pet: STR+15', 'Blood Pact Dmg.+13', 'Pet: "Dbl.Atk."+3'}}
 gear["Apogee"].Feet = {name="Apogee Pumps"}
-gear["Apogee"].Feet.A = {name="Apogee Pumps", augments={'MP+60', 'Pet: "Mag.Atk.Bns."+30', 'Blood Pact Damage+7'}}
-gear["Apogee"].Feet.B = {name="Apogee Pumps", augments={'MP+60', 'Pet: Attack+30', 'Blood Pact Damage+7'}}
-gear["Apogee"].Feet.C = {name="Apogee Pumps", augments={'Pet: Attack+20', 'Pet: "Mag.Atk.Bns."+20', 'Blood Pact Damage+7'}}
+gear["Apogee"].Feet.A = {name="Apogee Pumps", augments={'MP+60', 'Pet: "Mag.Atk.Bns."+30', 'Blood Pact Dmg.+7'}}
+gear["Apogee"].Feet.B = {name="Apogee Pumps", augments={'MP+60', 'Pet: Attack+30', 'Blood Pact Dmg.+7'}}
+gear["Apogee"].Feet.C = {name="Apogee Pumps", augments={'Pet: Attack+20', 'Pet: "Mag.Atk.Bns."+20', 'Blood Pact Dmg.+7'}}
 gear["Apogee"].Feet.D = {name="Apogee Pumps", augments={'MP+70', '"Summoning Magic Skill"+15', '"Blood Pact" Damage+7'}}
 ------ Argosy Armor Set
 gear["Argosy"] = {}
@@ -583,30 +583,30 @@ gear["Amalric"].HQ.Feet.D = {name="Amalric Nails +1", augments={'Mag. Acc.+20', 
 ------ Apogee Attire Set +1
 gear["Apogee"].HQ = {}
 gear["Apogee"].HQ.Head = {name="Apogee Crown +1"}
-gear["Apogee"].HQ.Head.A = {name="Apogee Crown +1", augments={'MP+80', 'Pet: "Mag.Atk.Bns."+35', 'Blood Pact Damage+8'}}
-gear["Apogee"].HQ.Head.B = {name="Apogee Crown +1", augments={'MP+80', 'Pet: Attack+35', 'Blood Pact Damage+8'}}
-gear["Apogee"].HQ.Head.C = {name="Apogee Crown +1", augments={'Pet: Attack+25', 'Pet: "Mag.Atk.Bns."+25', 'Blood Pact Damage+8'}}
+gear["Apogee"].HQ.Head.A = {name="Apogee Crown +1", augments={'MP+80', 'Pet: "Mag.Atk.Bns."+35', 'Blood Pact Dmg.+8'}}
+gear["Apogee"].HQ.Head.B = {name="Apogee Crown +1", augments={'MP+80', 'Pet: Attack+35', 'Blood Pact Dmg.+8'}}
+gear["Apogee"].HQ.Head.C = {name="Apogee Crown +1", augments={'Pet: Attack+25', 'Pet: "Mag.Atk.Bns."+25', 'Blood Pact Dmg.+8'}}
 gear["Apogee"].HQ.Head.D = {name="Apogee Crown +1", augments={'Pet: Accuracy+25', 'Perpetuation Cost-7', 'Pet: Damage Taken-4%'}}
 gear["Apogee"].HQ.Body = {name="Apogee Dalmatica +1"}
-gear["Apogee"].HQ.Body.A = {name="Apogee Dalmatica +1", augments={'MP+80', 'Pet: "Mag.Atk.Bns."+35', 'Blood Pact Damage+8'}}
-gear["Apogee"].HQ.Body.B = {name="Apogee Dalmatica +1", augments={'MP+80', 'Pet: Attack+35', 'Blood Pact Damage+8'}}
-gear["Apogee"].HQ.Body.C = {name="Apogee Dalmatica +1", augments={'Pet: Attack+25', 'Pet: "Mag.Atk.Bns."+25', 'Blood Pact Damage+8'}}
+gear["Apogee"].HQ.Body.A = {name="Apogee Dalmatica +1", augments={'MP+80', 'Pet: "Mag.Atk.Bns."+35', 'Blood Pact Dmg.+8'}}
+gear["Apogee"].HQ.Body.B = {name="Apogee Dalmatica +1", augments={'MP+80', 'Pet: Attack+35', 'Blood Pact Dmg.+8'}}
+gear["Apogee"].HQ.Body.C = {name="Apogee Dalmatica +1", augments={'Pet: Attack+25', 'Pet: "Mag.Atk.Bns."+25', 'Blood Pact Dmg.+8'}}
 gear["Apogee"].HQ.Body.D = {name="Apogee Dalmatica +1", augments={'"Summon Magic Skill"+20', 'Enmity-6', 'Pet: Damage Taken-4%'}}
 gear["Apogee"].HQ.Hands = {name="Apogee Mitts +1"}
-gear["Apogee"].HQ.Hands.A = {name="Apogee Mitts +1", augments={'MP+80', 'Pet: "Mag.Atk.Bns."+35', 'Blood Pact Damage+8'}}
-gear["Apogee"].HQ.Hands.B = {name="Apogee Mitts +1", augments={'MP+80', 'Pet: Attack+35', 'Blood Pact Damage+8'}}
-gear["Apogee"].HQ.Hands.C = {name="Apogee Mitts +1", augments={'Pet: Attack+25', 'Pet: "Mag.Atk.Bns."+25', 'Blood Pact Damage+8'}}
-gear["Apogee"].HQ.Hands.D = {name="Apogee Mitts +1", augments={'Pet: Mag. Acc.+25', 'BP Delay -7', 'Blood Pact Damage+8'}}
+gear["Apogee"].HQ.Hands.A = {name="Apogee Mitts +1", augments={'MP+80', 'Pet: "Mag.Atk.Bns."+35', 'Blood Pact Dmg.+8'}}
+gear["Apogee"].HQ.Hands.B = {name="Apogee Mitts +1", augments={'MP+80', 'Pet: Attack+35', 'Blood Pact Dmg.+8'}}
+gear["Apogee"].HQ.Hands.C = {name="Apogee Mitts +1", augments={'Pet: Attack+25', 'Pet: "Mag.Atk.Bns."+25', 'Blood Pact Dmg.+8'}}
+gear["Apogee"].HQ.Hands.D = {name="Apogee Mitts +1", augments={'Pet: Mag. Acc.+25', '"Blood Pact" ability delay+7', 'Blood Pact Dmg.+8'}}
 gear["Apogee"].HQ.Legs = {name="Apogee Slacks +1"}
-gear["Apogee"].HQ.Legs.A = {name="Apogee Slacks +1", augments={'MP+80', 'Pet: "Mag.Atk.Bns."+35', 'Blood Pact Damage+8'}}
-gear["Apogee"].HQ.Legs.B = {name="Apogee Slacks +1", augments={'MP+80', 'Pet: Attack+35', 'Blood Pact Damage+8'}}
-gear["Apogee"].HQ.Legs.C = {name="Apogee Slacks +1", augments={'Pet: Attack+25', 'Pet: "Mag.Atk.Bns."+25', 'Blood Pact Damage+8'}}
-gear["Apogee"].HQ.Legs.D = {name="Apogee Slacks +1", augments={'Pet: STR+20', 'Blood Pact Damage+14', 'Pet: "Dbl.Atk."+4'}}
+gear["Apogee"].HQ.Legs.A = {name="Apogee Slacks +1", augments={'MP+80', 'Pet: "Mag.Atk.Bns."+35', 'Blood Pact Dmg.+8'}}
+gear["Apogee"].HQ.Legs.B = {name="Apogee Slacks +1", augments={'MP+80', 'Pet: Attack+35', 'Blood Pact Dmg.+8'}}
+gear["Apogee"].HQ.Legs.C = {name="Apogee Slacks +1", augments={'Pet: Attack+25', 'Pet: "Mag.Atk.Bns."+25', 'Blood Pact Dmg.+8'}}
+gear["Apogee"].HQ.Legs.D = {name="Apogee Slacks +1", augments={'Pet: STR+20', 'Blood Pact Dmg.+14', 'Pet: "Dbl.Atk."+4'}}
 gear["Apogee"].HQ.Feet = {name="Apogee Pumps +1"}
-gear["Apogee"].HQ.Feet.A = {name="Apogee Pumps +1", augments={'MP+80', 'Pet: "Mag.Atk.Bns."+35', 'Blood Pact Damage+8'}}
-gear["Apogee"].HQ.Feet.B = {name="Apogee Pumps +1", augments={'MP+80', 'Pet: Attack+35', 'Blood Pact Damage+8'}}
-gear["Apogee"].HQ.Feet.C = {name="Apogee Pumps +1", augments={'Pet: Attack+25', 'Pet: "Mag.Atk.Bns."+25', 'Blood Pact Damage+8'}}
-gear["Apogee"].HQ.Feet.D = {name="Apogee Pumps +1", augments={'MP+80', '"Summoning Magic Skill"+20', 'Blood Pact Damage+8'}}
+gear["Apogee"].HQ.Feet.A = {name="Apogee Pumps +1", augments={'MP+80', 'Pet: "Mag.Atk.Bns."+35', 'Blood Pact Dmg.+8'}}
+gear["Apogee"].HQ.Feet.B = {name="Apogee Pumps +1", augments={'MP+80', 'Pet: Attack+35', 'Blood Pact Dmg.+8'}}
+gear["Apogee"].HQ.Feet.C = {name="Apogee Pumps +1", augments={'Pet: Attack+25', 'Pet: "Mag.Atk.Bns."+25', 'Blood Pact Dmg.+8'}}
+gear["Apogee"].HQ.Feet.D = {name="Apogee Pumps +1", augments={'MP+80', '"Summoning Magic Skill"+20', 'Blood Pact Dmg.+8'}}
 ------ Argosy Armor Set +1
 gear["Argosy"].HQ = {}
 gear["Argosy"].HQ.Head = {name="Argosy Celata +1"}

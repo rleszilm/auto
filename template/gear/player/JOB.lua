@@ -11,15 +11,15 @@ function init_gear_sets(sets)
     ----------------------------------------
 
     ----------------------------------------
-    -- ja - [SpellGroup].[spell.Name].[SpecificMode].CustomJAGroups
+    -- ja - [SpellGroups].[spell.Name].[SpecificMode].CustomJAGroups
     ----------------------------------------
 
     ----------------------------------------
-    -- ma - [CastingMode].[SpellGroup].[spell.Type].[spell.Skill].[spell.Name][SpecificMode].CustomMAGroups
+    -- ma - [CastingMode].[spell.Type].[spell.Skill].[SpellGroups].[spell.Name][SpecificMode].CustomMAGroups
     ----------------------------------------
 
     ----------------------------------------
-    -- pet - [PetAbilityMode].[pet.Name].[SpellGroup].[spell.Name].[SpecificMode].CustomPetAbilityGroups
+    -- pet - [PetAbilityMode].[pet.Name].[SpellGroups].[spell.Name].[SpecificMode].CustomPetAbilityGroups
     ----------------------------------------
 
     ----------------------------------------
@@ -37,11 +37,11 @@ function init_gear_sets(sets)
     ----------------------------------------
 
     ----------------------------------------
-    -- ma - [CastingMode].[SpellGroup].[spell.Type].[spell.Skill].[spell.Name][SpecificMode].CustomMAGroups
+    -- ma - [CastingMode].[spell.Type].[spell.Skill].[SpellGroups].[spell.Name][SpecificMode].CustomMAGroups
     ----------------------------------------
 
     ----------------------------------------
-    -- pet - [PetAbilityMode].[pet.Name].[SpellGroup].[spell.Name].[SpecificMode].CustomPetAbilityGroups
+    -- pet - [PetAbilityMode].[pet.Name].[SpellGroups].[spell.Name].[SpecificMode].CustomPetAbilityGroups
     ----------------------------------------
 
     ----------------------------------------

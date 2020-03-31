@@ -100,7 +100,9 @@ function auto_get_set_idle(eventArgs, equipSet)
     state.setPath:append("sets")
     state.setPath:append("idle")
 
-    local steps = {get_set_defense, get_set_pet_status, state.CustomIdleGroups}
+    equipSet = sets.idle
+
+    local steps = {get_set_defense, get_set_pet_status, get_set_idle, state.CustomIdleGroups}
     return step_set(steps, eventArgs, equipSet)
 end
 
@@ -149,7 +151,7 @@ end
 ----------------------------------------
 function get_set_idle(eventArgs, equipSet, spell)
     local steps = {state.IdleMode.current}
-    if state.Buffs.weakness then
+    if state.buffs.weakness then
         steps[#steps+1] = "weak"
     elseif areas.Cities:contains(world.area) then
         steps[#steps+1] = "town"
@@ -192,7 +194,7 @@ function get_set_ma(eventArgs, equipSet, spell)
         return equipSet
     end
     
-    local steps = {"ma", state.CastingMode.current, get_spell_group(spell), spell.type, spell.skill, spell.en, get_specific_mode(spell), state.CustomMAGroups}
+    local steps = {"ma", state.CastingMode.current, spell.type, spell.skill, get_spell_group(spell), spell.en, get_specific_mode(spell), state.CustomMAGroups}
     return step_set(steps, eventArgs, equipSet, spell)
 end
 
@@ -200,11 +202,11 @@ end
 -- get_set_pet_ability
 ----------------------------------------
 function get_set_pet_ability(eventArgs, equipSet, spell)
-    if not equipSet.pet then 
+    if not pet.isvalid then
         return equipSet
     end
 
-    local steps = {"pet", state.PetAbilityMode.current, pet.name, get_spell_group(spell), spell.en, get_specific_mode(spell), state.CustomPetAbilityGroups}
+    local steps = {"pet", state.PetAbilityMode.current, pet.name, spell.type, get_spell_group(spell), spell.en, get_specific_mode(spell), state.CustomPetAbilityGroups}
     return step_set(steps, eventArgs, equipSet, spell)
 end
 
@@ -212,7 +214,7 @@ end
 -- get_set_pet_status
 ----------------------------------------
 function get_set_pet_status(eventArgs, equipSet, spell)
-    if not equipSet.pet then 
+    if not pet.isvalid then
         return equipSet
     end
 
@@ -437,31 +439,7 @@ function get_specific_mode(spell)
     end
 end
 
-----------------------------------------
--- spell groups
-----------------------------------------
-function get_spell_group(spell)
-    local group
-    
-    for _, fun in pairs({job_get_spell_group, user_get_spell_group, auto_get_spell_group}) do
-        if fun then
-            local g = fun(spell)
-            if g then
-                return g
-            end
-        end
-    end
-end
 
-function auto_get_spell_group(spell)
-    if spell then
-        if spell_maps[spell.en] then
-            return spell_maps[spell.en]
-        elseif spell.type == "CorsairRoll" then
-            return spell.type
-        end
-    end
-end
 
 ----------------------------------------
 -- step_set
@@ -477,7 +455,7 @@ function step_set(step, eventArgs, equipSet, spell)
             return equipSet
         end
     else
-        windower.add_to_chat(22, "consider - "..step)
+        --windower.add_to_chat(22, "consider - "..step)
         if equipSet[step] then
             state.setPath:append(step)
             return equipSet[step]
