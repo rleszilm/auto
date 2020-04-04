@@ -61,7 +61,7 @@ function aftercast(spell)
     handle_action("aftercast", spell)
 end
 
-function auto_post_aftercast(eventArgs, spell)
+function auto_pre_aftercast(eventArgs, spell)
     eventArgs.equip = true
 end
 
@@ -89,11 +89,19 @@ function pet_change(pet, gain)
     handle_action("pet_change", pet, gain)
 end
 
+function auto_pre_pet_change(eventArgs, pet, gain)
+    eventArgs.equip = true
+end
+
 ------------------------------------------------------------
 -- pet_midcast
 ------------------------------------------------------------
 function pet_midcast(spell)
     handle_action("pet_midcast", spell)
+end
+
+function auto_pre_pet_midcast(eventArgs, spell)
+    eventArgs.equip = true
 end
 
 ------------------------------------------------------------
@@ -142,8 +150,8 @@ function buff_change(name, gain, buff_details)
 end
 
 function auto_buff_change(eventArgs, name, gain, buff_details)
-    state.buff[name] = gain
-    state.buff[name:lower()] = gain
+    state.buffs[name] = gain
+    state.buffs[name:lower()] = gain
 end
 
 ------------------------------------------------------------
@@ -218,6 +226,12 @@ function handle_action(action, ...)
     
     -- pre-equip logic
     call_foreach("pre_"..action, checkHandledCancel, eventArgs, unpack(args))
+    if eventArgs.cancel then
+        cancel_spell()
+    end
+
+    -- event logic
+    call_foreach(action, checkHandledCancel, eventArgs, unpack(args))
     if eventArgs.cancel then
         cancel_spell()
     end

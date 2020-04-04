@@ -27,8 +27,13 @@ function auto_get_spell_group(spell)
             return spell_maps[spell.type][spell.en]
         elseif spell.type == "CorsairRoll" then
             return spell.type
+        elseif spell.en:sub(1, 5) == "Indi-" then
+            return "Indicolure"
+        elseif spell.en:sub(1, 4) == "Geo-" then
+            return "Geocolure"
         end
     end
+    return "None"
 end
 
 ------------------------------------------------------------

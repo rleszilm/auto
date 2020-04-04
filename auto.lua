@@ -1,7 +1,6 @@
 -------------------------------------------------------------------------------
 -- Auto
 -------------------------------------------------------------------------------
-include("auto/binds")
 include("auto/commands")
 include("auto/gear")
 include("auto/gearswap")
@@ -9,12 +8,14 @@ include("auto/select_gear")
 include("auto/spell_groups")
 
 -- modules
-include("auto/combat_form")
-include("auto/gearinfo")
-include("auto/macros")
-include("auto/ranged_attack")
-include("auto/snapshot_bucket")
-include("auto/skill_chains")
+include("auto/modules/binds")
+include("auto/modules/combat_form")
+include("auto/modules/gearinfo")
+include("auto/modules/inventory_loaded")
+include("auto/modules/macros")
+include("auto/modules/ranged_attack")
+include("auto/modules/skill_chains")
+include("auto/modules/snapshot_bucket")
 
 -- mote code
 include("../libs/Modes")

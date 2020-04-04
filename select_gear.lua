@@ -437,9 +437,8 @@ function get_specific_mode(spell)
     elseif g and state[g.."Mode"] then
         return state[g.."Mode"].current
     end
+    return "None"
 end
-
-
 
 ----------------------------------------
 -- step_set
@@ -455,7 +454,9 @@ function step_set(step, eventArgs, equipSet, spell)
             return equipSet
         end
     else
-        --windower.add_to_chat(22, "consider - "..step)
+        if _settings.debug_mode then
+            windower.add_to_chat(22, "select set step - "..step)
+        end
         if equipSet[step] then
             state.setPath:append(step)
             return equipSet[step]
@@ -513,8 +514,10 @@ function display_set_path()
         end
     end
 
-    --windower.add_to_chat(22, "Equipping set - "..setStr)
-    --if swapStr then
-    --    windower.add_to_chat(22, "     w. swaps - "..swapStr)
-    --end
+    if _settings.show_swaps or _settings.debug_mode then
+        windower.add_to_chat(22, "Equipping set - "..setStr)
+        if swapStr then
+            windower.add_to_chat(22, "     w. swaps - "..swapStr)
+        end
+    end
 end
