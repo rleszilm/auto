@@ -7,27 +7,27 @@ function init_gear_sets(sets)
     ------------------------------------------------------------
     -- precast
     ------------------------------------------------------------
-    -- item - [item.Name].CustomItemGroups
+    -- item - [item.Name].[StatusEffects].CustomItemGroups
     ----------------------------------------
 
     ----------------------------------------
-    -- ja - [SpellGroups].[spell.Name].[SpecificMode].CustomJAGroups
+    -- ja - [SpellGroups].[spell.Name].[SpecificMode].[StatusEffects].CustomJAGroups
     ----------------------------------------
 
     ----------------------------------------
-    -- ma - [CastingMode].[spell.Type].[spell.Skill].[SpellGroups].[spell.Name][SpecificMode].CustomMAGroups
+    -- ma - [CastingMode].[spell.Type].[spell.Skill].[SpellGroups].[spell.Name].[SpecificMode].[StatusEffects].CustomMAGroups
     ----------------------------------------
 
     ----------------------------------------
-    -- pet - [PetAbilityMode].[pet.Name].[SpellGroups].[spell.Name].[SpecificMode].CustomPetAbilityGroups
+    -- pet - [PetAbilityMode].[pet.Name].[SpellGroups].[spell.Name].[SpecificMode].[StatusEffects].CustomPetAbilityGroups
     ----------------------------------------
 
     ----------------------------------------
-    -- ra - [player.sub_job].[RangedSkill].[RangedWeapon].[RangedAmmo].[TargetRangedAccuracy].[SnapshotBucket].CustomRangedGroups
+    -- ra - [player.sub_job].[RangedSkill].[RangedWeapon].[RangedAmmo].[TargetRangedAccuracy].[SnapshotBucket].[StatusEffects].CustomRangedGroups
     ----------------------------------------
 
     ----------------------------------------
-    -- ws - [WSMode].[spell.Name].[SpecificMode].CustomWSGroups
+    -- ws - [WSMode].[spell.Name].[SpecificMode].[StatusEffects].CustomWSGroups
     ----------------------------------------
 
     ------------------------------------------------------------
@@ -37,15 +37,15 @@ function init_gear_sets(sets)
     ----------------------------------------
 
     ----------------------------------------
-    -- ma - [CastingMode].[spell.Type].[spell.Skill].[SpellGroups].[spell.Name][SpecificMode].CustomMAGroups
+    -- ma - [CastingMode].[spell.Type].[spell.Skill].[SpellGroups].[spell.Name].[SpecificMode].[StatusEffects].CustomMAGroups
     ----------------------------------------
 
     ----------------------------------------
-    -- pet - [PetAbilityMode].[pet.Name].[SpellGroups].[spell.Name].[SpecificMode].CustomPetAbilityGroups
+    -- pet - [PetAbilityMode].[pet.Name].[SpellGroups].[spell.Name].[SpecificMode].[StatusEffects].CustomPetAbilityGroups
     ----------------------------------------
 
     ----------------------------------------
-    -- ra - [player.sub_job].[RangedSkill].[RangedWeapon].[RangedAmmo].[TargetRangedAccuracy].[SnapshotBucket].CustomRangedGroups
+    -- ra - [player.sub_job].[RangedSkill].[RangedWeapon].[RangedAmmo].[TargetRangedAccuracy].[SnapshotBucket].[StatusEffects].CustomRangedGroups
     ----------------------------------------
     
     ------------------------------------------------------------
@@ -57,7 +57,7 @@ function init_gear_sets(sets)
     --                |   |-[PetTargetAccuracy].CustomPetEngagedGroups
     --                |-idle
     --                    |-[PetIdleMode].CustomPetIdleGroups  
-    -- melee - [player.sub_job].[MeleeForm].[MeleeSkill].[MeleeWeapon].[TargetAccuracy].[DualWieldBucket].CustomMeleeGroups
+    -- melee - [player.sub_job].[MeleeForm].[MeleeSkill].[MeleeWeapon].[TargetAccuracy].[DualWieldBucket].[StatusEffects].CustomMeleeGroups
 
     ------------------------------------------------------------
     -- idle - [defense].[pet_status].[idle]
@@ -68,7 +68,7 @@ function init_gear_sets(sets)
     --                |   |-[PetTargetAccuracy].CustomPetEngagedGroups
     --                |-idle
     --                    |-[PetIdleMode].CustomPetIdleGroups  
-    -- idle - [IdleMode].[weak|town|field].CustomIdleGroups 
+    -- idle - [IdleMode].[weak|town|field].[StatusEffects].CustomIdleGroups 
 
     ------------------------------------------------------------
     -- weapons - [WeaponSetMode]

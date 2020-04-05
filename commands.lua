@@ -71,6 +71,7 @@ function handle_command(eventArgs, args, raw)
             local old = state[args[2]].current
             state[args[2]][args[1]](state[args[2]], args[3])
             windower.add_to_chat(14, args[2]..": "..old.." -> "..state[args[2]].current)
+            handle_action("refresh")
         end
     end
 end

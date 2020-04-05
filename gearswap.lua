@@ -150,8 +150,7 @@ function buff_change(name, gain, buff_details)
 end
 
 function auto_buff_change(eventArgs, name, gain, buff_details)
-    state.buffs[name] = gain
-    state.buffs[name:lower()] = gain
+    eventArgs.equip = true
 end
 
 ------------------------------------------------------------

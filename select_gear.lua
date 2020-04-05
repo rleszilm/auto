@@ -85,7 +85,7 @@ function auto_get_set_engaged(eventArgs, equipSet)
 
     equipSet = sets.engaged
 
-    local steps = {get_set_defense, get_set_pet_status, get_set_engaged, state.CustomMeleeGroups}
+    local steps = {get_set_defense, get_set_pet_status, get_set_engaged, get_set_status_effects, state.CustomMeleeGroups}
     return step_set(steps, eventArgs, equipSet)
 end
 
@@ -102,7 +102,7 @@ function auto_get_set_idle(eventArgs, equipSet)
 
     equipSet = sets.idle
 
-    local steps = {get_set_defense, get_set_pet_status, get_set_idle, state.CustomIdleGroups}
+    local steps = {get_set_defense, get_set_pet_status, get_set_idle, get_set_status_effects, state.CustomIdleGroups}
     return step_set(steps, eventArgs, equipSet)
 end
 
@@ -141,6 +141,7 @@ function get_set_engaged(eventArgs, equipSet, spell)
         state.MeleeWeapon.current,
         state.TargetAccuracy.current,
         dual_wield_bucket(),
+        get_set_status_effects,
         state.CustomMeleeGroups,
     }
     return step_set(steps, eventArgs, equipSet, spell)
@@ -151,13 +152,14 @@ end
 ----------------------------------------
 function get_set_idle(eventArgs, equipSet, spell)
     local steps = {state.IdleMode.current}
-    if state.buffs.weakness then
+    if buffactive.weakness then
         steps[#steps+1] = "weak"
     elseif areas.Cities:contains(world.area) then
         steps[#steps+1] = "town"
     else
         steps[#steps+1] = "field"
     end
+    steps[#steps+1] = get_set_status_effects
     steps[#steps+1] = state.CustomIdleGroups
     return step_set(steps, eventArgs, equipSet, spell)
 end
@@ -170,7 +172,7 @@ function get_set_item(eventArgs, equipSet, spell)
         return equipSet
     end
 
-    local steps = {"item", spell.en, state.CustomItemGroups}
+    local steps = {"item", spell.en, get_set_status_effects, state.CustomItemGroups}
     return step_set(steps, eventArgs, equipSet, spell)
 end
 
@@ -182,7 +184,7 @@ function get_set_ja(eventArgs, equipSet, spell)
         return equipSet
     end
 
-    local steps = {"ja", get_spell_group(spell), spell.en, get_specific_mode(spell), state.CustomJAGroups}
+    local steps = {"ja", get_spell_group(spell), spell.en, get_specific_mode(spell), get_set_status_effects, state.CustomJAGroups}
     return step_set(steps, eventArgs, equipSet, spell)
 end
 
@@ -194,7 +196,17 @@ function get_set_ma(eventArgs, equipSet, spell)
         return equipSet
     end
     
-    local steps = {"ma", state.CastingMode.current, spell.type, spell.skill, get_spell_group(spell), spell.en, get_specific_mode(spell), state.CustomMAGroups}
+    local steps = {
+        "ma",
+        state.CastingMode.current,
+        spell.type,
+        spell.skill,
+        get_spell_group(spell),
+        spell.en,
+        get_specific_mode(spell),
+        get_set_status_effects,
+        state.CustomMAGroups
+    }
     return step_set(steps, eventArgs, equipSet, spell)
 end
 
@@ -206,7 +218,17 @@ function get_set_pet_ability(eventArgs, equipSet, spell)
         return equipSet
     end
 
-    local steps = {"pet", state.PetAbilityMode.current, pet.name, spell.type, get_spell_group(spell), spell.en, get_specific_mode(spell), state.CustomPetAbilityGroups}
+    local steps = {
+        "pet",
+        state.PetAbilityMode.current,
+        pet.name,
+        spell.type,
+        get_spell_group(spell),
+        spell.en,
+        get_specific_mode(spell),
+        get_set_status_effects,
+        state.CustomPetAbilityGroups
+    }
     return step_set(steps, eventArgs, equipSet, spell)
 end
 
@@ -245,6 +267,7 @@ function get_set_ra(eventArgs, equipSet)
         state.RangedAmmo.current,
         state.TargetRangedAccuracy.current,
         snapshot_bucket and snapshot_bucket(),
+        get_set_status_effects,
         state.CustomRangedGroups,
     }
     return step_set(steps, eventArgs, equipSet)
@@ -258,7 +281,20 @@ function get_set_ws(eventArgs, equipSet, spell)
         return equipSet
     end
 
-    local steps = {"ws", state.WeaponSkillMode.current, spell.en, get_specific_mode(spell), state.CustomWSGroups}
+    local steps = {"ws", state.WeaponSkillMode.current, spell.en, get_specific_mode(spell), get_set_status_effects, state.CustomWSGroups}
+    return step_set(steps, eventArgs, equipSet, spell)
+end
+
+----------------------------------------
+-- get_set_status_effects
+----------------------------------------
+function get_set_status_effects(eventArgs, equipSet, spell)
+    local steps = {}
+    for _, buff in ipairs(state.buffs) do
+        if buffactive[buff] then
+            steps[#steps+1] = buff
+        end
+    end
     return step_set(steps, eventArgs, equipSet, spell)
 end
 
