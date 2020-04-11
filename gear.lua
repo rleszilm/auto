@@ -2,6 +2,77 @@
 gear = gear or {{}}
 
 -- Armor
+---- Skirmish
+------ Cizin Armor Set
+gear["Cizin"] = {}
+gear["Cizin"].Head = {name="Cizin Helm"}
+gear["Cizin"].Body = {name="Cizin Mail"}
+gear["Cizin"].Hands = {name="Cizin Mufflers"}
+gear["Cizin"].Legs = {name="Cizin Breeches"}
+gear["Cizin"].Feet = {name="Cizin Greaves"}
+------ Gendewitha Armor Set
+gear["Gendewitha"] = {}
+gear["Gendewitha"].Head = {name="Gendewitha Caubeen"}
+gear["Gendewitha"].Body = {name="Gendewitha Bliaut"}
+gear["Gendewitha"].Hands = {name="Gendewitha Gages"}
+gear["Gendewitha"].Legs = {name="Gendewitha Spats"}
+gear["Gendewitha"].Feet = {name="Gendewitha Galoshes"}
+------ Hagondes Armor Set
+gear["Hagondes"] = {}
+gear["Hagondes"].Head = {name="Hagondes Hat"}
+gear["Hagondes"].Body = {name="Hagondes Coat"}
+gear["Hagondes"].Hands = {name="Hagondes Cuffs"}
+gear["Hagondes"].Legs = {name="Hagondes Pants"}
+gear["Hagondes"].Feet = {name="Hagondes Sabots"}
+------ Iuitl Armor Set
+gear["Iuitl"] = {}
+gear["Iuitl"].Head = {name="Iuitl Headgear"}
+gear["Iuitl"].Body = {name="Iuitl Vest"}
+gear["Iuitl"].Hands = {name="Iuitl Wristbands"}
+gear["Iuitl"].Legs = {name="Iuitl Tights"}
+gear["Iuitl"].Feet = {name="Iuitl Gaiters"}
+------ Otronif Armor Set
+gear["Otronif"] = {}
+gear["Otronif"].Head = {name="Otronif Mask"}
+gear["Otronif"].Body = {name="Otronif Harness"}
+gear["Otronif"].Hands = {name="Otronif Gloves"}
+gear["Otronif"].Legs = {name="Otronif Brais"}
+gear["Otronif"].Feet = {name="Otronif Boots"}
+------ Cizin HQ Armor Set
+gear["Cizin"].HQ = {}
+gear["Cizin"].HQ.Head = {name="Cizin Helm +1"}
+gear["Cizin"].HQ.Body = {name="Cizin Mail +1"}
+gear["Cizin"].HQ.Hands = {name="Cizin Mufflers +1"}
+gear["Cizin"].HQ.Legs = {name="Cizin Breeches +1"}
+gear["Cizin"].HQ.Feet = {name="Cizin Greaves +1"}
+------ Gendewitha HQ Armor Set
+gear["Gendewitha"].HQ = {}
+gear["Gendewitha"].HQ.Head = {name="Gendewitha Caubeen +1"}
+gear["Gendewitha"].HQ.Body = {name="Gendewitha Bliaut +1"}
+gear["Gendewitha"].HQ.Hands = {name="Gendewitha Gages +1"}
+gear["Gendewitha"].HQ.Legs = {name="Gendewitha Spats +1"}
+gear["Gendewitha"].HQ.Feet = {name="Gendewitha Galoshes +1"}
+------ Hagondes HQ Armor Set
+gear["Hagondes"].HQ = {}
+gear["Hagondes"].HQ.Head = {name="Hagondes Hat +1"}
+gear["Hagondes"].HQ.Body = {name="Hagondes Coat +1"}
+gear["Hagondes"].HQ.Hands = {name="Hagondes Cuffs +1"}
+gear["Hagondes"].HQ.Legs = {name="Hagondes Pants +1"}
+gear["Hagondes"].HQ.Feet = {name="Hagondes Sabots +1"}
+------ Iuitl HQ Armor Set
+gear["Iuitl"].HQ = {}
+gear["Iuitl"].HQ.Head = {name="Iuitl Headgear +1"}
+gear["Iuitl"].HQ.Body = {name="Iuitl Vest +1"}
+gear["Iuitl"].HQ.Hands = {name="Iuitl Wristbands +1"}
+gear["Iuitl"].HQ.Legs = {name="Iuitl Tights +1"}
+gear["Iuitl"].HQ.Feet = {name="Iuitl Gaiters +1"}
+------ Otronif HQ Armor Set
+gear["Otronif"].HQ = {}
+gear["Otronif"].HQ.Head = {name="Otronif Mask +1"}
+gear["Otronif"].HQ.Body = {name="Otronif Harness +1"}
+gear["Otronif"].HQ.Hands = {name="Otronif Gloves +1"}
+gear["Otronif"].HQ.Legs = {name="Otronif Brais +1"}
+gear["Otronif"].HQ.Feet = {name="Otronif Boots +1"}
 ---- Alluvion Skirmish
 ------ Yorium Armor Set
 gear["Yorium"] = {}

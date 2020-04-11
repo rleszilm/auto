@@ -54,13 +54,9 @@ end
 function dual_wield_bucket()
     if job_dual_wield_bucket then
         return "DW-"..job_dual_wield_bucket(state.modules.gearinfo.dw_needed)
-    end
-
-    if user_dual_wield_bucket then
+    elseif user_dual_wield_bucket then
         return "DW-"..user_dual_wield_bucket(state.modules.gearinfo.dw_needed)
-    end
-
-    if auto_dual_wield_bucket then
+    elseif auto_dual_wield_bucket then
         return "DW-"..auto_dual_wield_bucket(state.modules.gearinfo.dw_needed)
     end
 end

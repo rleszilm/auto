@@ -470,7 +470,7 @@ function get_specific_mode(spell)
 
     if state[spell.en.."Mode"] then
         return state[spell.en.."Mode"].current
-    elseif g and state[g.."Mode"] then
+    elseif g and type(g) == "string" and state[g.."Mode"] then
         return state[g.."Mode"].current
     end
     return "None"
