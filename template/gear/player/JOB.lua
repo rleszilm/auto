@@ -57,7 +57,7 @@ function init_gear_sets(sets)
     --                |   |-[PetTargetAccuracy].CustomPetEngagedGroups
     --                |-idle
     --                    |-[PetIdleMode].CustomPetIdleGroups  
-    -- melee - [player.sub_job].[MeleeForm].[MeleeSkill].[MeleeWeapon].[TargetAccuracy].[DualWieldBucket].[StatusEffects].CustomMeleeGroups
+    -- melee - [player.sub_job].[MeleeForm].[MeleeSkill].[MeleeWeapon].[OffhandWeapon].[TargetAccuracy].[DualWieldBucket].[StatusEffects].CustomMeleeGroups
 
     ------------------------------------------------------------
     -- idle - [defense].[pet_status].[idle]

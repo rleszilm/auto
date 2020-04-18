@@ -548,9 +548,13 @@ spell_maps['Enfeebling Magic']['Silence'] = 'Accuracy'
 -- Potency.INT
 ----------------------------------------
 spell_maps['Enfeebling Magic']['Blind'] = {'Potency', 'INT'}
-spell_maps['Enfeebling Magic']['Poison'] = {'Potency', 'INT'}
-spell_maps['Enfeebling Magic']['Poison II'] = {'Potency', 'INT'}
-spell_maps['Enfeebling Magic']['Poisonga'] = {'Potency', 'INT'}
+
+----------------------------------------
+-- Potency.Skill.INT
+----------------------------------------
+spell_maps['Enfeebling Magic']['Poison'] = {'Potency', 'Skill', 'INT'}
+spell_maps['Enfeebling Magic']['Poison II'] = {'Potency', 'Skill', 'INT'}
+spell_maps['Enfeebling Magic']['Poisonga'] = {'Potency', 'Skill', 'INT'}
 
 ----------------------------------------
 -- Potency.MND
@@ -559,11 +563,15 @@ spell_maps['Enfeebling Magic']['Addle'] = {'Potency', 'MND'}
 spell_maps['Enfeebling Magic']['Addle II'] = {'Potency', 'MND'}
 spell_maps['Enfeebling Magic']['Distract'] = {'Potency', 'MND'}
 spell_maps['Enfeebling Magic']['Distract II'] = {'Potency', 'MND'}
-spell_maps['Enfeebling Magic']['Distract III'] = {'Potency', 'MND'}
 spell_maps['Enfeebling Magic']['Frazzle'] = {'Potency', 'MND'}
 spell_maps['Enfeebling Magic']['Frazzle II'] = {'Potency', 'MND'}
-spell_maps['Enfeebling Magic']['Frazzle III'] = {'Potency', 'MND'}
 spell_maps['Enfeebling Magic']['Paralyze'] = {'Potency', 'MND'}
 spell_maps['Enfeebling Magic']['Paralyze II'] = {'Potency', 'MND'}
 spell_maps['Enfeebling Magic']['Slow'] = {'Potency', 'MND'}
 spell_maps['Enfeebling Magic']['Slow II'] = {'Potency', 'MND'}
+
+----------------------------------------
+-- Potency.Skill.MND
+----------------------------------------
+spell_maps['Enfeebling Magic']['Distract III'] = {'Potency', 'Skill', 'MND'}
+spell_maps['Enfeebling Magic']['Frazzle III'] = {'Potency', 'Skill', 'MND'}

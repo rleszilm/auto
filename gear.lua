@@ -1,5 +1,5 @@
 -- Gear
-gear = gear or {{}}
+gear = gear or {}
 
 -- Armor
 ---- Skirmish
@@ -276,27 +276,27 @@ gear["Rawhide"].Feet.D = {name="Rawhide Boots", augments={'STR+10', 'Attack+15',
 gear["Vanya"] = {}
 gear["Vanya"].Head = {name="Vanya Hood"}
 gear["Vanya"].Head.A = {name="Vanya Hood", augments={'MP+50', '"Cure" Potency+7%', 'Enmity -6'}}
-gear["Vanya"].Head.B = {name="Vanya Hood", augments={'Healing Magic Skill +20', '"Cure" spellcasting time-7%', 'Magic Damage Taken -3%'}}
+gear["Vanya"].Head.B = {name="Vanya Hood", augments={'Healing magic skill +20','"Cure" spellcasting time -7%','Magic dmg. taken -3'}}
 gear["Vanya"].Head.C = {name="Vanya Hood", augments={'MND+10', 'Spell Interruption rate-15%', 'Conserve MP+6'}}
 gear["Vanya"].Head.D = {name="Vanya Hood", augments={'MP+50', '"Fast Cast"+10%', 'Haste+2%'}}
 gear["Vanya"].Body = {name="Vanya Robe"}
 gear["Vanya"].Body.A = {name="Vanya Robe", augments={'MP+50', '"Cure" Potency+7%', 'Enmity -6'}}
-gear["Vanya"].Body.B = {name="Vanya Robe", augments={'Healing Magic Skill +20', '"Cure" spellcasting time-7%', 'Magic Damage Taken -3%'}}
+gear["Vanya"].Body.B = {name="Vanya Robe", augments={'Healing magic skill +20','"Cure" spellcasting time -7%','Magic dmg. taken -3'}}
 gear["Vanya"].Body.C = {name="Vanya Robe", augments={'MND+10', 'Spell Interruption rate-15%', 'Conserve MP+6'}}
 gear["Vanya"].Body.D = {name="Vanya Robe", augments={'HP+50', 'MP+50', 'Refresh+2'}}
 gear["Vanya"].Hands = {name="Vanya Cuffs"}
 gear["Vanya"].Hands.A = {name="Vanya Cuffs", augments={'MP+50', '"Cure" Potency+7%', 'Enmity -6'}}
-gear["Vanya"].Hands.B = {name="Vanya Cuffs", augments={'Healing Magic Skill +20', '"Cure" spellcasting time-7%', 'Magic Damage Taken -3%'}}
+gear["Vanya"].Hands.B = {name="Vanya Cuffs", augments={'Healing magic skill +20','"Cure" spellcasting time -7%','Magic dmg. taken -3'}}
 gear["Vanya"].Hands.C = {name="Vanya Cuffs", augments={'MND+10', 'Spell Interruption rate-15%', 'Conserve MP+6'}}
 gear["Vanya"].Hands.D = {name="Vanya Cuffs", augments={'CHR+10', 'String Skill+10', 'Mag. Acc.+20'}}
 gear["Vanya"].Legs = {name="Vanya Slops"}
 gear["Vanya"].Legs.A = {name="Vanya Slops", augments={'MP+50', '"Cure" Potency+7%', 'Enmity -6'}}
-gear["Vanya"].Legs.B = {name="Vanya Slops", augments={'Healing Magic Skill +20', '"Cure" spellcasting time-7%', 'Magic Damage Taken -3%'}}
+gear["Vanya"].Legs.B = {name="Vanya Slops", augments={'Healing magic skill +20','"Cure" spellcasting time -7%','Magic dmg. taken -3'}}
 gear["Vanya"].Legs.C = {name="Vanya Slops", augments={'MND+10', 'Spell Interruption rate-15%', 'Conserve MP+6'}}
 gear["Vanya"].Legs.D = {name="Vanya Slops", augments={'HP+50', 'Magic Evasion+15', 'Physical Damage Taken-3%'}}
 gear["Vanya"].Feet = {name="Vanya Clogs"}
 gear["Vanya"].Feet.A = {name="Vanya Clogs", augments={'MP+50', '"Cure" Potency+7%', 'Enmity -6'}}
-gear["Vanya"].Feet.B = {name="Vanya Clogs", augments={'Healing Magic Skill +20', '"Cure" spellcasting time-7%', 'Magic Damage Taken -3%'}}
+gear["Vanya"].Feet.B = {name="Vanya Clogs", augments={'Healing magic skill +20','"Cure" spellcasting time -7%','Magic dmg. taken -3'}}
 gear["Vanya"].Feet.C = {name="Vanya Clogs", augments={'MND+10', 'Spell Interruption rate-15%', 'Conserve MP+6'}}
 gear["Vanya"].Feet.D = {name="Vanya Clogs", augments={'"Cure" Potency+5%', '"Cure" spellcasting time-15%', 'Conserve MP+6'}}
 ---- Ru'Aun
@@ -1205,124 +1205,89 @@ gear.AmbuCapes.SCH = {name="Lugh's Cape"}
 gear.AmbuCapes.GEO = {name="Nantosuelta's Cape"}
 gear.AmbuCapes.RUN = {name="Ogma's cape"}
 
+-- Duplicates
+function configure_rings(left, right)
+    configure_duplicates(gear.Rings, left, right)
+end
 
---[[
-Sets layout
+function configure_earrings(left, right)
+    configure_duplicates(gear.Earrings, left, right)
+end
 
-sets.
-  |-precast
-  |   |-item
-  |   |   |-[item()]
-  |   |-ja
-  |   |   |-[jobability()]
-  |   |-ma
-  |   |   |-[magic()]
-  |   |-pet
-  |   |   |-[pet_ability()]
-  |   |-ra
-  |   |   |-[ranged()]
-  |   |-ws
-  |   |   |-[weaponskill()]
-  |-midcast
-  |   |-item
-  |   |   |-[item()]
-  |   |-ma
-  |   |   |-[magic()]
-  |   |-pet
-  |   |   |-[pet_ability()]
-  |   |-ra
-  |       |-[ranged()]
-  |-engaged
-  |   |-[defense()]
-  |       |-[pet_status()]
-  |           |-[melee()]
-  |-idle
-  |   |-[defense()]
-  |       |-[pet_status()]
-  |           |-[idle()]
-swaps.
-  |-precast|midcast|engaged|idle
-      |-weather
-      |   |-[Element]
-      |-day
-      |   |-[Day]
-      |-time
-      |   |-dawn|day|dusk|night
-      |-running
-      |-treasurehunter
-      |   |-[TreasureHunterMode]
-      |-buff
-      |   |-CustomBuffGroups...
-      |-CustomSwaps...
+function configure_duplicates(table, left, right)
+    for _, item in pairs(table) do
+        item.Left.bag = left
+        item.Right.bag = right
+        if item.HQ then
+            item.Left.HQ.bag = left
+            item.Right.HQ.bag = right
+        end
+    end
+end
 
-weapons.
-  |-melee
-  |   |-[WeaponSetMode]
-  |-ranged
-  |   |-[RangedWeaponSetMode]
-  |-ammo
-  |   |-[AmmoSetMode]
+---- Rings
+gear.Rings = {}
+gear.Rings.Chirich = {
+    Left={name="Chirich Ring", bag="Wardrobe2"},
+    Right={name="Chirich Ring", bag="Wardrobe3"},
+}
+gear.Rings.Chirich.HQ = {
+    Left={name="Chirich Ring +1", bag="Wardrobe2"},
+    Right={name="Chirich Ring +1", bag="Wardrobe3"},
+}
 
+gear.Rings.Fenrir = {
+    Left={name="Fenrir Ring", bag="Wardrobe2"},
+    Right={name="Fenrir Ring", bag="Wardrobe3"},
+}
+gear.Rings.Fenrir.HQ = {
+    Left={name="Fenrir Ring +1", bag="Wardrobe2"},
+    Right={name="Fenrir Ring +1", bag="Wardrobe3"},
+}
 
-defense()
-    |-defense
-        |-[DefenseMode]
-            |-[DefenseModeMode]
+gear.Rings.Moonbeam = {
+    Left={name="Moonbeam Ring", bag="Wardrobe2"},
+    Right={name="Moonbeam Ring", bag="Wardrobe3"},
+}
+gear.Rings.Moonbeam.HQ = {
+    Left={name="Moonlight Ring", bag="Wardrobe2"},
+    Right={name="Moonlight Ring", bag="Wardrobe3"},
+}
 
-engaged()
-  |-[CombatForm]
-      |-[CombatSkill]
-          |-[CombatWeapon]
-              |-[TargetAccuracy]
-                  |-[MeleeHaste]
-                      |-CusmtomMeleeGroups...
+gear.Rings.Shiva = {
+    Left={name="Shiva Ring", bag="Wardrobe2"},
+    Right={name="Shiva Ring", bag="Wardrobe3"},
+}
+gear.Rings.Shiva.HQ = {
+    Left={name="Shiva Ring +1", bag="Wardrobe2"},
+    Right={name="Shiva Ring +1", bag="Wardrobe3"},
+}
 
-idle()
-  |-[IdleMode]
-      |-pet()
-      |   |-weak|town|field
-      |       |-CustomIdleGroups...
-      |-weak|town|field
-          |-CustomIdleGroups...
+gear.Rings.Stikini = {
+    Left={name="Stikini Ring", bag="Wardrobe2"},
+    Right={name="Stikini Ring", bag="Wardrobe3"},
+}
+gear.Rings.Stikini.HQ = {
+    Left={name="Stikini Ring +1", bag="Wardrobe2"},
+    Right={name="Stikini Ring +1", bag="Wardrobe3"},
+}
 
-item()
-  |-[Item.Name]
-      |-CustomItemGroups
+gear.Rings.Varar = {
+    Left={name="Varar Ring", bag="Wardrobe2"},
+    Right={name="Varar Ring", bag="Wardrobe3"},
+}
+gear.Rings.Varar.HQ = {
+    Left={name="Varar Ring +1", bag="Wardrobe2"},
+    Right={name="Varar Ring +1", bag="Wardrobe3"},
+}
 
-jobability()
-  |-CustomJAGroups
-
-magic()
-  |-[CastingMode]
-      |-[SpellGroup]
-          |-[Spell.Type]
-              |-[Spell.Skill]
-                  |-[Spell.Name]
-                      |-CustomMAGroups
-
-ranged()
-  |-[TargetRangedAccuracy]
-      |-[RangedHaste]
-          |-CustomRangedGroups...
-
-weaponskill()
-  |-[WSMode]
-      |-[WS.Name]
-          |-CustomWSGroups...
-
-pet_ability()
-  |-[Pet.Name]
-      |-[PetAbilityMode]
-          |-[PetSpellGroup]
-              |-[Spell.Name]
-                  |-CustomPetAbilityroups...
-
-pet_status()
-  |-[Pet.Name]
-      |-engaged
-      |   |-[PetTargetAcc]
-      |       |-CustomPetEngagedGroups...
-      |-idle
-          |-[PetIdleMode]
-              |-CustomPetIdleGroups...
-]]--
+---- Earrings
+gear.Earrings = {}
+gear.Earrings.Mache = {
+    Left={name="Mache Earring", bag="Wardrobe2"},
+    Right={name="Mache Earring", bag="Wardrobe3"},
+}
+gear.Earrings.Mache.HQ = {
+    Left={name="Mache Earring +1", bag="Wardrobe2"},
+    Right={name="Mache Earring +1", bag="Wardrobe3"},
+}

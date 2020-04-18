@@ -85,7 +85,7 @@ function auto_get_set_engaged(eventArgs, equipSet)
 
     equipSet = sets.engaged
 
-    local steps = {get_set_defense, get_set_pet_status, get_set_engaged, get_set_status_effects, state.CustomMeleeGroups}
+    local steps = {get_set_defense, get_set_pet_status, get_set_engaged, state.CustomMeleeGroups}
     return step_set(steps, eventArgs, equipSet)
 end
 
@@ -102,7 +102,7 @@ function auto_get_set_idle(eventArgs, equipSet)
 
     equipSet = sets.idle
 
-    local steps = {get_set_defense, get_set_pet_status, get_set_idle, get_set_status_effects, state.CustomIdleGroups}
+    local steps = {get_set_defense, get_set_pet_status, get_set_idle, state.CustomIdleGroups}
     return step_set(steps, eventArgs, equipSet)
 end
 
@@ -139,6 +139,7 @@ function get_set_engaged(eventArgs, equipSet, spell)
         state.MeleeForm.current, 
         state.MeleeSkill.current,
         state.MeleeWeapon.current,
+        state.OffhandWeapon.current,
         state.TargetAccuracy.current,
         dual_wield_bucket(),
         get_set_status_effects,
@@ -290,8 +291,13 @@ end
 ----------------------------------------
 function get_set_status_effects(eventArgs, equipSet, spell)
     local steps = {}
+
+    if buff_counts then
+        steps[#steps+1] = buff_counts()
+    end
+
     for _, buff in ipairs(state.buffs) do
-        if buffactive[buff] then
+        if buffactive[buff] or state.buffactiveCustom[buff] then
             steps[#steps+1] = buff
         end
     end

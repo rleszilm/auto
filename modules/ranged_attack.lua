@@ -15,7 +15,6 @@ function rangedattack:new(o)
 
     -- init state
     o.Mode = M(false, 'RA Mode')
-    o.TargetMode = M{['description'] = 'RA Target', '<t>', '<stnpc>'}
     return o
 end
 
@@ -32,12 +31,8 @@ function rangedattack:self_command(eventArgs, command)
         else
             send_command("ara stop")
         end
-    elseif command[1] == "cycle" then
-        update_mode("RangedAttack.TargetMode", self.TargetMode, "cycle")
-    elseif command[1] == "cycleback" then
-        update_mode("RangedAttack.TargetMode", self.TargetMode, "cycleback")
     elseif command[1] == "ra" then
-        send_command("input /ra "..self.RangedTargetMode.current)
+        send_command("input /ra "..state.TargetNPCMode.current)
     end
 end
 

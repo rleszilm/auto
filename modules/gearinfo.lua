@@ -23,7 +23,7 @@ function gearinfo:init()
 end
 
 function gearinfo:self_command(eventArgs, command)
-    if self:set('dw_needed', command[1]) then
+    if self:set('dw_needed', tonumber(command[1]) or "None") then
         eventArgs.handled = true
         eventArgs.equip = true
     end

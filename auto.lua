@@ -32,6 +32,7 @@ function init()
 
     -- buffs to find sets for
     state.buffs = L{}
+    state.buffactiveCustom = {}
     
     ------------------------------------------------------------
     -- config
@@ -55,7 +56,8 @@ function init()
     state.MeleeForm         = M{["description"] = "MeleeForm", "H2H", "1H", "2H", "DW"}
     state.MeleeFormOverride = M{["description"] = "MeleeFormOverride", "None", "H2H", "1H", "2H", "DW"}
     state.MeleeSkill        = M{["description"] = "MeleeSkill", ["string"]=""}
-    state.MeleeWeapon       = M{["description"] = "MeleeWeapon", ["string"]=""} 
+    state.MeleeWeapon       = M{["description"] = "MeleeWeapon", ["string"]=""}
+    state.OffhandWeapon     = M{["description"] = "OffhandWeapon", ["string"]=""}
     state.TargetAccuracy    = M{["description"] = "TargetAccuracy", "Default"}
     state.CustomMeleeGroups = L{}
 

@@ -57,8 +57,10 @@ function combatform:equip_sub(p)
 
     if item and item.skill then
         self.subSkill = res.skills[item.skill].en
+        self:set("OffhandWeapon", item.en)
     else
         self.subSkill = res.skills[0].en
+        self:set("OffhandWeapon", "None")
     end
 
     self:set_form()
