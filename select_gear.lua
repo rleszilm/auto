@@ -61,6 +61,24 @@ function auto_get_set_midcast(eventArgs, equipSet, spell)
 end
 
 ----------------------------------------
+-- auto_get_set_receiving
+----------------------------------------
+function auto_get_set_receiving(eventArgs, equipSet, spell)
+    if not sets.receiving or not sets.receiving.ma then
+        return equipSet
+    end
+
+    state.setPath:append("sets")
+    state.setPath:append("receiving")
+    state.setPath:append("ma")
+
+    equipSet = sets.receiving.ma
+
+    local steps = {get_spell_group(spell), spell.en}
+    return step_set(steps, eventArgs, equipSet)
+end
+
+----------------------------------------
 -- auto_get_set_by_status
 ----------------------------------------
 function auto_get_set_by_status(eventArgs, equipSet)

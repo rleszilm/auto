@@ -187,6 +187,45 @@ function auto_pre_refresh(eventArgs, spell)
 end
 
 ------------------------------------------------------------
+-- receiving
+------------------------------------------------------------
+-- non-gs action. Triggers when certain spell types are being cast directly on the player.
+-- equips for the first spell being cast and lock gear selection until that spell is cast or interrupted.
+function receiving(spell)
+    handle_action("receiving", spell)
+end
+
+function auto_pre_receiving(eventArgs, spell)
+    eventArgs.equip = true
+    if state.busyUntil then
+        eventArgs.handled = true
+    end
+end
+
+function auto_post_receiving(eventArgs, spell)
+    state.busyUntil = "receiving_aftercast"
+end
+
+------------------------------------------------------------
+-- receiving_aftercast
+------------------------------------------------------------
+-- non-gs action. Triggers when certain spell types are being cast directly on the player.
+-- equips for the first spell being cast and lock gear selection until that spell is cast or interrupted.
+function receiving_aftercast(spell)
+    handle_action("receiving_aftercast", spell)
+end
+
+function auto_pre_receiving_aftercast(eventArgs, spell)
+    eventArgs.equip = true
+end
+
+function auto_post_receiving_aftercast(eventArgs, spell)
+    if state.busyUntil == "receiving_aftercast" then
+        state.busyUntil = nil
+    end
+end
+
+------------------------------------------------------------
 -- file_unload
 ------------------------------------------------------------
 function file_unload(file_name)
@@ -260,7 +299,7 @@ function handle_equip(action, eventArgs, ...)
     if action == "pet_midcast" then
         -- pet_midcast is set during midcast
         return
-    elseif action ~= "precast" and action ~= "midcast" then
+    elseif action ~= "precast" and action ~= "midcast" and action ~= "receiving" then
         action = "by_status"
     end
 

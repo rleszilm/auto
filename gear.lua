@@ -1219,8 +1219,8 @@ function configure_duplicates(table, left, right)
         item.Left.bag = left
         item.Right.bag = right
         if item.HQ then
-            item.Left.HQ.bag = left
-            item.Right.HQ.bag = right
+            item.HQ.Left.bag = left
+            item.HQ.Right.bag = right
         end
     end
 end

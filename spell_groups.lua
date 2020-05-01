@@ -21,16 +21,16 @@ end
 
 function auto_get_spell_group(spell)
     if spell then
-       if spell_maps[spell.skill] and spell_maps[spell.skill][spell.en] then
+        if spell_maps[spell.skill] and spell_maps[spell.skill][spell.en] then
             return spell_maps[spell.skill][spell.en]
-        elseif spell.type == "CorsairRoll" then
-            return spell.type
+        elseif spell_maps[spell.en] then
+            return spell_maps[spell.en]
         elseif spell.en:sub(1, 5) == "Indi-" then
             return "Indicolure"
         elseif spell.en:sub(1, 4) == "Geo-" then
             return "Geocolure"
-        elseif spell_maps[spell.en] then
-            return spell_maps[spell.en]
+        else
+            return spell.type
         end
     end
     return "None"

@@ -4,6 +4,7 @@
 include("auto/commands")
 include("auto/gear")
 include("auto/gearswap")
+include("auto/receiving")
 include("auto/select_gear")
 include("auto/spell_groups")
 
@@ -143,6 +144,10 @@ function init()
     sets.midcast.pet = {}
     sets.midcast.ra = {}
 
+    -- receiving
+    sets.receiving = {}
+    sets.receiving.ma = {}
+
     ---- engaged
     sets.engaged = {}
     sets.engaged.defense = {}
@@ -177,7 +182,7 @@ function init()
     -- load sets
     optional_include({"gear/"..player.name.."/"..player.main_job..".lua"})
     if init_gear_sets then
-        sets = init_gear_sets(sets)
+        init_gear_sets(sets)
     else
         windower.add_to_chat(12, "init_gear_sets has not been defined")
     end
@@ -240,7 +245,9 @@ function auto_binds(state)
     state.binds:bind("~^f9", "gs c cycleback RangedWeaponSetMode")
     state.binds:bind("!f9", "gs c cycle AmmoSetMode")
     state.binds:bind("~!f9", "gs c cycleback AmmoSetMode")
-    
+    state.binds:bind("@f9", "gs c cycle MeleeFormOverride")
+    state.binds:bind("~@f9", "gs c cycleback MeleeFormOverride")
+
     -- armor toggles
     state.binds:bind("f10", "gs c cycle DefenseMode")
     state.binds:bind("~f10", "gs c cycleback DefenseMode")
@@ -252,12 +259,11 @@ function auto_binds(state)
     state.binds:bind("~@f10", "gs c cycleback HybridDefenseMode")
 
     -- engaged forms
-    state.binds:bind("f11", "gs c cycle MeleeFormOverride")
-    state.binds:bind("~f11", "gs c cycleback MeleeFormOverride")
-    state.binds:bind("^f11", "gs c cycle TargetAccuracy")
-    state.binds:bind("~^f11", "gs c cycleback TargetAccuracy")
-    state.binds:bind("!f11", "gs c cycle TargetRangedAccuracy")
-    state.binds:bind("~!f11", "gs c cycleback TargetRangedAccuracy")
+    state.binds:bind("f11", "gs c cycle TargetAccuracy")
+    state.binds:bind("~f11", "gs c cycleback TargetAccuracy")
+    state.binds:bind("^f11", "gs c cycle TargetRangedAccuracy")
+    state.binds:bind("~^f11", "gs c cycleback TargetRangedAccuracy")
+
 end
 
 function update_mode(...)
